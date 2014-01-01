@@ -38,6 +38,6 @@ A service that listens to a #hashtag and retweets the incoming messages (or perf
 
 * Twitter integration
 
-### Other
+### Games
 
-* Scalathon
+* [Scalatron](http://scalatron.github.io/)
