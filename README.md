@@ -15,6 +15,8 @@ Small challenges proposed on a weekly basis to learn scala and their basic conce
 
 * [s99](http://aperiodic.net/phil/scala/s-99) and [tests](https://github.com/jsuereth/scala-99-puzzles/blob/master/src/test/scala/suereth/TestNinetyNine.scala)
 
+An example project using sbt-skeleton repo has been created at s99/akustik. You may just add a new folder for your solution if you want/need to share the code.
+
 ## Monthly challenges
 
 More demanding challenges aimed to create pet (or even real) applications using state-of-the-art frameworks or technologies. First ones could be done individually and more complex ones by small teams. Each month a new challenge is going to be proposed and afterwards the experience shared in one (or more) meet ups. Current list,
