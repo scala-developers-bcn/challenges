@@ -11,4 +11,6 @@ object Lists {
     case _ => nth(index-1, xs.tail)
   } 
 
+  def length[T](xs: List[T] ) : Int = xs.foldLeft(0)((acc,x) => acc+1)
+
 }

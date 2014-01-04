@@ -19,12 +19,13 @@ class ListsSpec extends FlatSpec with ShouldMatchers {
  it should " Find the Kth element of a list.  (By convention, the first element in the list is element 0.)" in { 
     nth(2, List(1, 1, 2, 3, 5, 8)) should be(2)
  }
-   /*
 
-P04 (*) Find the number of elements of a list.
-Example:
-scala> length(List(1, 1, 2, 3, 5, 8))
-res0: Int = 6
+ it should " Find the number of elements of a list." in {
+  // #length seems to be a publicly available method and so even though I import Lists._ this other #length() is used instead causing a compilation error. Current solution I found was to add Lists. to the invotacion to ensure my Lists#length isbeing used.
+   Lists.length(List(1, 1, 2, 3, 5, 8)) should be(6)
+ }
+
+   /*
 P05 (*) Reverse a list.
 Example:
 scala> reverse(List(1, 1, 2, 3, 5, 8))
