@@ -16,14 +16,11 @@ class ListsSpec extends FlatSpec with ShouldMatchers {
     penultimate(List(1, 1, 2, 3, 5, 8)) should be (5)
  }
 
+ it should " Find the Kth element of a list.  (By convention, the first element in the list is element 0.)" in { 
+    nth(2, List(1, 1, 2, 3, 5, 8)) should be(2)
+ }
    /*
 
-P03 (*) Find the Kth element of a list.
-By convention, the first element in the list is element 0.
-Example:
-
-scala> nth(2, List(1, 1, 2, 3, 5, 8))
-res0: Int = 2
 P04 (*) Find the number of elements of a list.
 Example:
 scala> length(List(1, 1, 2, 3, 5, 8))
