@@ -29,11 +29,15 @@ class ListsSpec extends FlatSpec with ShouldMatchers {
    reverse(List(1, 1, 2, 3, 5, 8)) should be(List(8, 5, 3, 2, 1, 1))
  }
 
+ it should "Find out whether a list is a palindrome." in {
+   isPalindrome(List(1, 2, 3, 2, 1)) should be (true)
+ }
+
+ it should "Not find a palindrome when there's none" in {
+   isPalindrome(List(1, 2, 3, 3, 1)) should be (false)
+ }
+
    /*
-P06 (*) Find out whether a list is a palindrome.
-Example:
-scala> isPalindrome(List(1, 2, 3, 2, 1))
-res0: Boolean = true
 P07 (**) Flatten a nested list structure.
 Example:
 scala> flatten(List(List(1, 1), 2, List(3, List(5, 8))))

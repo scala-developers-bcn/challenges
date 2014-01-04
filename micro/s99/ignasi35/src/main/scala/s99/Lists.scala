@@ -15,4 +15,12 @@ object Lists {
 
   def reverse[T](xs: List[T] ) : List[T] = xs.foldLeft(List[T]())( (acc,x) => x :: acc  )
 
+  def isPalindrome[T](xs: List[T]) : Boolean = {
+    xs match {
+      case Nil => true
+      case x :: Nil => true
+      case h :: tail => xs.head == xs.tail.reverse.head && isPalindrome(xs.tail.take(xs.tail.length-1))
+    }
+  }
+
 }
