@@ -32,8 +32,9 @@ object Lists {
         case _ => x :: acc
      }).reverse
   
-  def compress[T](xs: List[T]) : List[T] = xs.foldLeft(List[T]())( (acc, x) => 
-    if(!acc.isEmpty && x==acc.head) acc else x::acc
+  def compress[T](xs: List[T]) : List[T] = xs.foldLeft(List[T]())( 
+    (acc, x) => 
+       if (acc.isEmpty || x!=acc.head) x :: acc else acc
    ).reverse
 
 
