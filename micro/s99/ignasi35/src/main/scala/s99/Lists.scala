@@ -2,10 +2,11 @@ package s99
 
 object Lists {
 
-  def last[T](in: List[T]) : T = in.reverse.head
+  def last[T](xs: List[T]) : T = xs.reverse.head
 
-  def penultimate[T](in:List[T]) : T = in.reverse.tail.head
+  def penultimate[T](xs:List[T]) : T = xs.reverse.tail.head
 
+  @scala.annotation.tailrec 
   def nth[T](index: Int, xs:List[T]) : T = index match {
     case 0 => xs.head
     case _ => nth(index-1, xs.tail)
@@ -19,7 +20,7 @@ object Lists {
     xs match {
       case Nil => true
       case x :: Nil => true
-      case h :: tail => xs.head == xs.tail.reverse.head && isPalindrome(xs.tail.take(xs.tail.length-1))
+      case h :: tail => xs.head == last(xs) && isPalindrome(xs.tail.take(xs.tail.length-1))
     }
   }
 
