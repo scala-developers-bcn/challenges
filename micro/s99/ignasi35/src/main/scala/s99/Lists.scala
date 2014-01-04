@@ -16,6 +16,7 @@ object Lists {
 
   def reverse[T](xs: List[T] ) : List[T] = xs.foldLeft(List[T]())( (acc,x) => x :: acc  )
 
+  // I suspect this can be tailrec but still havent wrapped my head around it...
   def isPalindrome[T](xs: List[T]) : Boolean = {
     xs match {
       case Nil => true
@@ -23,5 +24,6 @@ object Lists {
       case h :: tail => xs.head == last(xs) && isPalindrome(xs.tail.take(xs.tail.length-1))
     }
   }
+
 
 }
