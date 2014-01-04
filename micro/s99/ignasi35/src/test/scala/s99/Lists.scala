@@ -6,14 +6,13 @@ import org.scalatest.FlatSpec
 
 class ListsSpec extends FlatSpec with ShouldMatchers {
 
- "A s99 problem set on lists" should "find the last element of a list" in {
+ import s99.Lists._
 
+ "A s99 problem set on lists" should "find the last element of a list" in {
+   last(List(1, 1, 2, 3, 5, 8)) should be(8)
  }
    /*
-P01 (*) Find the last element of a list.
-Example:
-scala> last(List(1, 1, 2, 3, 5, 8))
-res0: Int = 8
+
 P02 (*) Find the last but one element of a list.
 Example:
 scala> penultimate(List(1, 1, 2, 3, 5, 8))
