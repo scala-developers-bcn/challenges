@@ -27,9 +27,29 @@ object Lists {
 
   // this solution I don't like,
   def flatten(xss: List[Any]) : List[Any] = xss.foldLeft(List[Any]())((acc, x) => 
-      x match {
+     x match {
         case l : List[_] => flatten(l).reverse ::: acc
         case _ => x :: acc
      }).reverse
-   
+  
+  def compress[T](xs: List[T]) : List[T] = xs.foldLeft(List[T]())( 
+    (acc, x) => 
+       if (acc.isEmpty || x!=acc.head) x :: acc else acc
+   ).reverse
+
+  def pack[T](xs: List[T]) : List[List[T]] = {
+    @scala.annotation.tailrec
+    def pack0(result: List[List[T]], acc: List[T], xs: List[T]):List[List[T]] = {
+      (acc, xs) match {
+       case (_, Nil)                       => (acc :: result).reverse
+       case (Nil, _)                       => pack0(result, List(xs.head), xs.tail)
+       case (_, h :: t) if (acc.head == h) => pack0(result, h :: acc, t)
+       case _                              => pack0(acc :: result, List(xs.head), xs.tail)
+      }
+    }
+    pack0(Nil, Nil, xs)
+  }
+
+  def encode[T](xs: List[T]): List[(Int, T)] = pack(xs) map { l => (l.length, l.head) }
+
 }
