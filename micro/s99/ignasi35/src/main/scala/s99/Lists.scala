@@ -25,5 +25,11 @@ object Lists {
     }
   }
 
-
+  // this solution I don't like,
+  def flatten(xss: List[Any]) : List[Any] = xss.foldLeft(List[Any]())((acc, x) => 
+      x match {
+        case l : List[_] => flatten(l).reverse ::: acc
+        case _ => x :: acc
+     }).reverse
+   
 }

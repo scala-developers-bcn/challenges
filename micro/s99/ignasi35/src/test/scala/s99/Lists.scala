@@ -37,11 +37,10 @@ class ListsSpec extends FlatSpec with ShouldMatchers {
    isPalindrome(List(1, 2, 3, 3, 1)) should be (false)
  }
 
+ it should "Flatten a nested list structure." in {
+   flatten(List(List(1, 1), 2, List(3, List(5, 8)))) should be (List(1, 1, 2, 3, 5, 8))
+ }
    /*
-P07 (**) Flatten a nested list structure.
-Example:
-scala> flatten(List(List(1, 1), 2, List(3, List(5, 8))))
-res0: List[Any] = List(1, 1, 2, 3, 5, 8)
 P08 (**) Eliminate consecutive duplicates of list elements.
 If a list contains repeated elements they should be replaced with a single copy of the element. The order of the elements should not be changed.
 Example:
