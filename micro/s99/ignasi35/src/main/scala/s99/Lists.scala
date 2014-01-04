@@ -38,6 +38,7 @@ object Lists {
    ).reverse
 
   def pack[T](xs: List[T]) : List[List[T]] = {
+    @scala.annotation.tailrec
     def pack0(result: List[List[T]], acc: List[T], xs: List[T]):List[List[T]] = {
       (acc, xs) match {
        case (_, Nil)                       => (acc :: result).reverse
@@ -48,4 +49,7 @@ object Lists {
     }
     pack0(Nil, Nil, xs)
   }
+
+  def encode[T](xs: List[T]): List[(Int, T)] = pack(xs) map { l => (l.length, l.head) }
+
 }
