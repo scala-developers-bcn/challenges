@@ -40,13 +40,12 @@ class ListsSpec extends FlatSpec with ShouldMatchers {
  it should "Flatten a nested list structure." in {
    flatten(List(List(1, 1), 2, List(3, List(5, 8)))) should be (List(1, 1, 2, 3, 5, 8))
  }
-   /*
-P08 (**) Eliminate consecutive duplicates of list elements.
-If a list contains repeated elements they should be replaced with a single copy of the element. The order of the elements should not be changed.
-Example:
 
-scala> compress(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
-res0: List[Symbol] = List('a, 'b, 'c, 'a, 'd, 'e)
+ it should "Eliminate consecutive duplicates of list elements. If a list contains repeated elements they should be replaced with a single copy of the element. The order of the elements should not be changed." in {
+    compress(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) should be( List('a, 'b, 'c, 'a, 'd, 'e) )
+ }
+
+   /*
 P09 (**) Pack consecutive duplicates of list elements into sublists.
 If a list contains repeated elements they should be placed in separate sublists.
 Example:
