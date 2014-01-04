@@ -25,11 +25,11 @@ class ListsSpec extends FlatSpec with ShouldMatchers {
    Lists.length(List(1, 1, 2, 3, 5, 8)) should be(6)
  }
 
+ it should "Reverse a list." in {
+   reverse(List(1, 1, 2, 3, 5, 8)) should be(List(8, 5, 3, 2, 1, 1))
+ }
+
    /*
-P05 (*) Reverse a list.
-Example:
-scala> reverse(List(1, 1, 2, 3, 5, 8))
-res0: List[Int] = List(8, 5, 3, 2, 1, 1)
 P06 (*) Find out whether a list is a palindrome.
 Example:
 scala> isPalindrome(List(1, 2, 3, 2, 1))

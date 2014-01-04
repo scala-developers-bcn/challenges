@@ -13,4 +13,6 @@ object Lists {
 
   def length[T](xs: List[T] ) : Int = xs.foldLeft(0)((acc,x) => acc+1)
 
+  def reverse[T](xs: List[T] ) : List[T] = xs.foldLeft(List[T]())( (acc,x) => x :: acc  )
+
 }
