@@ -11,12 +11,13 @@ class ListsSpec extends FlatSpec with ShouldMatchers {
  "A s99 problem set on lists" should "find the last element of a list" in {
    last(List(1, 1, 2, 3, 5, 8)) should be(8)
  }
+
+ it should " Find the last but one element of a list." in {
+    penultimate(List(1, 1, 2, 3, 5, 8)) should be (5)
+ }
+
    /*
 
-P02 (*) Find the last but one element of a list.
-Example:
-scala> penultimate(List(1, 1, 2, 3, 5, 8))
-res0: Int = 5
 P03 (*) Find the Kth element of a list.
 By convention, the first element in the list is element 0.
 Example:
