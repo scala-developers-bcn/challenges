@@ -1,7 +1,6 @@
 package s99
 
 import scala.annotation.tailrec
-import sun.font.TrueTypeFont
 
 /**
  * Created with IntelliJ IDEA.
