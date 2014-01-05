@@ -1,8 +1,5 @@
 package com.agilogy
 
-import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel
-
-
 class S99Challenge {
 
   def last(x: List[Int]) = x match {
