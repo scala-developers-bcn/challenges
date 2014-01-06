@@ -3,8 +3,10 @@ package org.scalabcn.s99
 import scala.annotation.tailrec
 
 object Week1 {
-  object P01 {
-    def trivial[T](xs: List[T]) = xs.last
+  object Last {
+    def trivial[T](xs: List[T]): T = xs.last
+
+    def composing[T](xs: List[T]): T = xs.reverse.head
 
     @tailrec
     def recursive[T](xs: List[T]): T = xs match {
@@ -12,5 +14,9 @@ object Week1 {
       case x :: xs => recursive(xs)
       case Nil => throw new NoSuchElementException
     }
+
+    def fold[T](xs: List[T]): T = (xs.head /: xs)((a: T, b: T) => b)
+
+    def funcs[T]: List[(List[T]) => T] = List(trivial[T], composing[T], recursive[T], fold[T])
   }
 }

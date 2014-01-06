@@ -2,14 +2,17 @@ package org.scalabcn.s99
 
 import org.scalatest.{Matchers, FlatSpec}
 import org.scalatest.prop.PropertyChecks
-import org.scalabcn.s99.Week1.P01
+import org.scalabcn.s99.Week1.Last
 
 class Week1FlatSpec extends FlatSpec with Matchers with PropertyChecks {
-  "Solution 1" should "return last element of list" in {
+  def p01[T](xs: List[T], result: T) =
+    for(func <- Last.funcs[T])
+      func(xs) should equal (result)
+
+  "Last (solution 1)" should "return last element of list" in {
     forAll { (init: List[Int], last: Int) =>
       val complete = (last :: init).reverse
-      P01.trivial(complete) should equal (last)
-      P01.recursive(complete) should equal (last)
+      p01(complete, last)
     }
   }
 }
