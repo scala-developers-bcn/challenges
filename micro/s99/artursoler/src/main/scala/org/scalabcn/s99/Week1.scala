@@ -37,4 +37,17 @@ object Week1 {
 
     def funcs[T]: List[List[T] => T] = List(trivial[T], reversing[T], sliding[T], recursive[T])
   }
+
+  object Nth {
+    def trivial[T](pos: Int, xs: List[T]): T = xs(pos)
+
+    @tailrec
+    def recursive[T](pos: Int, xs: List[T]): T =
+      if (pos == 0)
+        xs.head
+      else
+        recursive(pos-1, xs.tail)
+
+    def funcs[T]: List[(Int, List[T])=> T] = List(trivial[T], recursive[T])
+  }
 }
