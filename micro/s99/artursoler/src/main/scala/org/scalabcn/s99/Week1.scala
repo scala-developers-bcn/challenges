@@ -6,7 +6,7 @@ object Week1 {
   object Last {
     def trivial[T](xs: List[T]): T = xs.last
 
-    def composing[T](xs: List[T]): T = xs.reverse.head
+    def reversing[T](xs: List[T]): T = xs.reverse.head
 
     @tailrec
     def recursive[T](xs: List[T]): T = xs match {
@@ -17,6 +17,24 @@ object Week1 {
 
     def fold[T](xs: List[T]): T = (xs.head /: xs)((a: T, b: T) => b)
 
-    def funcs[T]: List[(List[T]) => T] = List(trivial[T], composing[T], recursive[T], fold[T])
+    def funcs[T]: List[List[T] => T] = List(trivial[T], reversing[T], recursive[T], fold[T])
+  }
+
+  object Penultimate {
+    def trivial[T](xs: List[T]): T = xs.init.last
+
+    def reversing[T](xs: List[T]): T = xs.reverse.tail.head
+
+    def sliding[T](xs: List[T]): T = xs.sliding(2).toList.last.head
+
+    @tailrec
+    def recursive[T](xs: List[T]): T = xs match {
+      case x :: y :: Nil => x
+      case x :: Nil => throw new NoSuchElementException
+      case Nil => throw new NoSuchElementException
+      case x :: xs => recursive(xs)
+    }
+
+    def funcs[T]: List[List[T] => T] = List(trivial[T], reversing[T], sliding[T], recursive[T])
   }
 }
