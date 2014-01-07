@@ -50,4 +50,28 @@ object Week1 {
 
     def funcs[T]: List[(Int, List[T])=> T] = List(trivial[T], recursive[T])
   }
+
+  object Length {
+    def trivial[T](xs: List[T]): Int = xs.length
+
+    def recursive[T](xs: List[T]): Int = xs match {
+      case Nil => 0
+      case x :: xs => 1 + recursive(xs)
+    }
+
+    def recursiveTailrec[T](xs: List[T]) = {
+      @tailrec
+      def inner[T](xs: List[T], acc: Int): Int = xs match {
+        case Nil => acc
+        case x :: xs => inner(xs, acc+1)
+      }
+      inner(xs, 0)
+    }
+
+    def fold[T](xs: List[T]) = (xs :\ 0)((elem, acc) => acc+1)
+
+    def funcs[T]: List[List[T] => Int] = List(trivial[T], recursive[T], recursiveTailrec[T], fold[T])
+  }
+
+  
 }
