@@ -73,5 +73,24 @@ object Week1 {
     def funcs[T]: List[List[T] => Int] = List(trivial[T], recursive[T], recursiveTailrec[T], fold[T])
   }
 
-  
+  object Reverse {
+    def trivial[T](xs: List[T]) = xs.reverse
+
+    def recursive[T](xs: List[T]): List[T] = xs match {
+      case Nil => Nil
+      case x :: xs => recursive(xs) ::: List(x)
+    }
+
+    def recursiveTailrec[T](xs: List[T]) = {
+      def inner[T](xs: List[T], acc: List[T]): List[T] = xs match {
+        case Nil => acc
+        case x :: xs => inner(xs, x :: acc)
+      }
+      inner(xs, List[T]())
+    }
+
+    def fold[T](xs: List[T]) = (List[T]() /: xs)((acc, x) => x :: acc)
+
+    def funcs[T]: List[List[T] => List[T]] = List(trivial[T], recursive[T], recursiveTailrec[T], fold[T])
+  }
 }

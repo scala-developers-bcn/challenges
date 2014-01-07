@@ -2,7 +2,7 @@ package org.scalabcn.s99
 
 import org.scalatest.{Matchers, FlatSpec}
 import org.scalatest.prop.PropertyChecks
-import org.scalabcn.s99.Week1.{Length, Nth, Penultimate, Last}
+import org.scalabcn.s99.Week1._
 
 class Week1FlatSpec extends FlatSpec with Matchers with PropertyChecks {
   def p01[T](xs: List[T], result: T) =
@@ -45,6 +45,16 @@ class Week1FlatSpec extends FlatSpec with Matchers with PropertyChecks {
   "Length (solution 4)" should "return the length of the list" in {
     forAll { (list: List[Int]) =>
       p04(list, list.length)
+    }
+  }
+
+  def p05[T](xs: List[T], result: T) =
+    for(func <- Reverse.funcs[T])
+      func(xs) should equal (result)
+
+  "Reverse (solution 5)" should "return the original list reversed" in {
+    forAll { (list: List[Int]) =>
+      p05(list, list.reverse)
     }
   }
 
