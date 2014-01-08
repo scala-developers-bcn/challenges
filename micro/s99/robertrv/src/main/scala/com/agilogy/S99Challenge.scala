@@ -58,4 +58,10 @@ class S99Challenge {
 
   def encode[T](xs:List[T]): List[(Int, T)] = pack(xs).map(list => (list.size,list.head))
 
+  def encodeModified[T](xs:List[T]): List[Any] = pack(xs).map(list => {
+    if (list.size > 1) (list.size,list.head)
+    else list.head
+  })
+
+  def decode[T](xs: List[(Int, T)]):List[T] = xs.flatMap(e => (1 to e._1).map(_ => e._2))
 }

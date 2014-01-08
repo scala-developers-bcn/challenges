@@ -104,4 +104,14 @@ class S99ChallengeFlatSpec extends FlatSpec with Matchers {
       List((4,'a), (1,'b), (2,'c), (2,'a), (1,'d), (4,'e)))
   }
 
+  "P11" should "Modified run-length encoding" in {
+    s99.encodeModified(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) should be (
+      List((4,'a), 'b, (2,'c), (2,'a), 'd, (4,'e)))
+  }
+
+  "P12" should "Decode a run-length encoded list" in {
+    s99.decode(List((4, 'a), (1, 'b), (2, 'c), (2, 'a), (1, 'd), (4, 'e))) should be (
+      List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
+  }
+
 }
