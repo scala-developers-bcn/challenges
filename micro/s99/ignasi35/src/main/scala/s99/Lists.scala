@@ -72,7 +72,7 @@ object Lists {
     }.flatten
 
   def encodeDirect[T](xs: List[T]): List[(Int, T)] = {
-    xs.foldLeft(List[(Int, T)]())( (acc, x) => {
+    xs.foldLeft(List[(Int, T)]())((acc, x) => {
       acc match {
         case head :: tail if (head._2 == x) => (head._1 + 1, head._2) :: tail
         case _ => (1, x) :: acc
@@ -82,13 +82,31 @@ object Lists {
   }
 
   // I'd like to solve this in a single list traversal. :-(
-  def duplicate[T](xs:List[T]):List[T] = xs map { x => List(x,x)} flatMap(identity)
+  def duplicate[T](xs: List[T]): List[T] = xs map {
+    x => List(x, x)
+  } flatMap (identity)
 
 
-  def duplicateN[T](factor:Int, xs:List[T]):List[T] =
-    xs.map{ x => Stream.continually(x).take(factor)}.flatMap(identity)
+  def duplicateN[T](factor: Int, xs: List[T]): List[T] =
+    xs.map {
+      x => Stream.continually(x).take(factor)
+    }.flatMap(identity)
 
-  def drop[T](factor:Int, xs:List[T]) :List[T] =
-    xs.zipWithIndex.filter{case (x,i) => (i+1)%factor != 0} map { case (x,i) => x}
+  // This requires 2 list traversals :-(
+  def drop[T](factor: Int, xs: List[T]): List[T] =
+    xs.zipWithIndex.filter {
+      case (x, i) => (i + 1) % factor != 0
+    } map {
+      case (x, i) => x
+    }
+
+  def split[T](pointCut: Int, xs: List[T]): (List[T], List[T]) = {
+    def removeIndex(xs: List[(T, Int)]) = xs.map(entry => entry._1)
+    val (front, back) = xs.zipWithIndex.partition {
+      case (x, i) => i < pointCut
+    }
+    (removeIndex(front), removeIndex(back))
+  }
+
 
 }

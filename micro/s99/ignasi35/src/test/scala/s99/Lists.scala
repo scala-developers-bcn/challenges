@@ -94,13 +94,14 @@ class ListsSpec extends FlatSpec with ShouldMatchers {
   it should "Drop every Nth element from a list." in {
     drop(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be(List('a, 'b, 'd, 'e, 'g, 'h, 'j, 'k))
   }
-  /*
-  P17 (*) Split a list into two parts.
-The length of the first part is given. Use a Tuple for your result.
-Example:
 
-scala> split(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
-res0: (List[Symbol], List[Symbol]) = (List('a, 'b, 'c),List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
+  it should "Split a list into two parts. The length of the first part is given. Use a Tuple for your result." in {
+    split(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be((List('a, 'b, 'c), List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k)))
+  }
+
+  /*
+
+
 P18 (**) Extract a slice from a list.
 Given two indices, I and K, the slice is the list containing the elements from and including the Ith element up to but not including the Kth element of the original list. Start counting the elements with 0.
 Example:
