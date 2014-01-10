@@ -59,5 +59,7 @@ object Lists {
     }
   }
 
+  def decode[T](xs : List[(Int,T)]) :List[T] =
+    xs.map{t:(Int,T) => Stream.continually(t._2).take(t._1).toList}.flatten
 
 }
