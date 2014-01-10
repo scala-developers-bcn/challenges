@@ -17,13 +17,8 @@ object Lists {
   def reverse[T](xs: List[T]): List[T] = xs.foldLeft(List[T]())((acc, x) => x :: acc)
 
   // I suspect this can be tailrec but still havent wrapped my head around it...
-  def isPalindrome[T](xs: List[T]): Boolean = {
-    xs match {
-      case Nil => true
-      case x :: Nil => true
-      case h :: tail => xs.head == last(xs) && isPalindrome(xs.tail.take(xs.tail.length - 1))
-    }
-  }
+  def isPalindrome[T](xs: List[T]): Boolean =
+    xs == reverse(xs)
 
   // this solution I don't like,
   def flatten(xss: List[Any]): List[Any] = xss.foldLeft(List[Any]())((acc, x) =>
