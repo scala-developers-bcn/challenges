@@ -81,6 +81,7 @@ object Lists {
     ).reverse
   }
 
+  // I'd like to solve this in a single list traversal. :-(
   def duplicate[T](xs:List[T]):List[T] = xs map { x => List(x,x)} flatten
 
 }
