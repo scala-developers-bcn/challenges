@@ -22,4 +22,17 @@ object Week1 {
   def length[T](xs: List[T]) = (xs :\ 0)((elem, acc) => acc+1)
 
   def reverse[T](xs: List[T]) = (List[T]() /: xs)((acc, x) => x :: acc)
+
+  def isPalindrome[T](xs: List[T]): Boolean = {
+    @tailrec
+    def inner[T](xs: List[T], reversed: List[T]): Boolean = xs match {
+      case xs if(xs == reversed) => true
+      case x :: xs if(xs == reversed) => true
+      case x :: xs => inner(xs, x :: reversed)
+      case Nil => false
+    }
+    inner(xs, List[T]())
   }
+
+
+}
