@@ -12,8 +12,22 @@ class ListsSpec extends FlatSpec with ShouldMatchers {
     last(List(1, 1, 2, 3, 5, 8)) should be(8)
   }
 
+  it should "throw IllegalArgumentException when asked the last element of empty list" in {
+    intercept[IllegalArgumentException] {
+      last(List[Int]())
+
+    }
+  }
+
   it should " Find the last but one element of a list." in {
     penultimate(List(1, 1, 2, 3, 5, 8)) should be(5)
+  }
+
+  it should "throw IllegalArgumentException when asked the penultimate element of lists shorter (or equal) than 1" in {
+    intercept[IllegalArgumentException] {
+      penultimate(List[Int]())
+      penultimate(List(1))
+    }
   }
 
   it should " Find the Kth element of a list.  (By convention, the first element in the list is element 0.)" in {

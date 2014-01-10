@@ -2,9 +2,16 @@ package s99
 
 object Lists {
 
-  def last[T](xs: List[T]): T = xs.reverse.head
+  def last[T](xs: List[T]): T = xs match {
+    case Nil => throw new IllegalArgumentException
+    case l => l.reverse.head
+  }
 
-  def penultimate[T](xs: List[T]): T = xs.reverse.tail.head
+  def penultimate[T](xs: List[T]): T = xs match {
+    case Nil => throw new IllegalArgumentException
+    case x :: Nil => throw new IllegalArgumentException
+    case l => l.reverse.tail.head
+  }
 
   @scala.annotation.tailrec
   def nth[T](index: Int, xs: List[T]): T = index match {
@@ -59,7 +66,9 @@ object Lists {
     }
   }
 
-  def decode[T](xs : List[(Int,T)]) :List[T] =
-    xs.map{t:(Int,T) => Stream.continually(t._2).take(t._1).toList}.flatten
+  def decode[T](xs: List[(Int, T)]): List[T] =
+    xs.map {
+      t: (Int, T) => Stream.continually(t._2).take(t._1).toList
+    }.flatten
 
 }
