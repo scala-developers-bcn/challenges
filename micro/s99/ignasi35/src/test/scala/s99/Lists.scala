@@ -90,14 +90,12 @@ class ListsSpec extends FlatSpec with ShouldMatchers {
   it should "Duplicate the elements of a list a given number of times." in {
     duplicateN(3, List('a, 'b, 'c, 'c, 'd)) should be(List('a, 'a, 'a, 'b, 'b, 'b, 'c, 'c, 'c, 'c, 'c, 'c, 'd, 'd, 'd))
   }
-  /*
 
-res0: List[Symbol] =
-P16 (**) Drop every Nth element from a list.
-Example:
-scala> drop(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
-res0: List[Symbol] = List('a, 'b, 'd, 'e, 'g, 'h, 'j, 'k)
-P17 (*) Split a list into two parts.
+  it should "Drop every Nth element from a list." in {
+    drop(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be(List('a, 'b, 'd, 'e, 'g, 'h, 'j, 'k))
+  }
+  /*
+  P17 (*) Split a list into two parts.
 The length of the first part is given. Use a Tuple for your result.
 Example:
 

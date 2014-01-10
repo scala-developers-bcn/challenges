@@ -88,4 +88,7 @@ object Lists {
   def duplicateN[T](factor:Int, xs:List[T]):List[T] =
     xs.map{ x => Stream.continually(x).take(factor)}.flatMap(identity)
 
+  def drop[T](factor:Int, xs:List[T]) :List[T] =
+    xs.zipWithIndex.filter{case (x,i) => (i+1)%factor != 0} map { case (x,i) => x}
+
 }
