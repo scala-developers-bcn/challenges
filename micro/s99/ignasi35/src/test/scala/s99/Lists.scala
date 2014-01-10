@@ -79,20 +79,16 @@ class ListsSpec extends FlatSpec with ShouldMatchers {
     decode(List((4, 'a), (1, 'b), (2, 'c), (2, 'a), (1, 'd), (4, 'e))) should be(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
   }
 
+  it should "Run-length encoding of a list (direct solution). Implement the so-called run-length encoding data compression method directly. I.e. don't use other methods you've written (like P09's pack); do all the work directly." in {
+    encodeDirect(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) should be(List((4, 'a), (1, 'b), (2, 'c), (2, 'a), (1, 'd), (4, 'e)))
+  }
+
   /*
+  it should "Duplicate the elements of a list." in {
+    duplicate(List('a, 'b, 'c, 'c, 'd)) should be(List('a, 'a, 'b, 'b, 'c, 'c, 'c, 'c, 'd, 'd))
+  }
 
 
-P13 (**) Run-length encoding of a list (direct solution).
-Implement the so-called run-length encoding data compression method directly. I.e. don't use other methods you've written (like P09's pack); do all the work directly.
-Example:
-
-scala> encodeDirect(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
-res0: List[(Int, Symbol)] = List((4,'a), (1,'b), (2,'c), (2,'a), (1,'d), (4,'e))
-
-P14 (*) Duplicate the elements of a list.
-Example:
-scala> duplicate(List('a, 'b, 'c, 'c, 'd))
-res0: List[Symbol] = List('a, 'a, 'b, 'b, 'c, 'c, 'c, 'c, 'd, 'd)
 P15 (**) Duplicate the elements of a list a given number of times.
 Example:
 scala> duplicateN(3, List('a, 'b, 'c, 'c, 'd))

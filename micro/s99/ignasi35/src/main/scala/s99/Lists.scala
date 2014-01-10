@@ -71,4 +71,14 @@ object Lists {
       t: (Int, T) => Stream.continually(t._2).take(t._1).toList
     }.flatten
 
+  def encodeDirect[T](xs: List[T]): List[(Int, T)] = {
+    xs.foldLeft(List[(Int, T)]())( (acc, x) => {
+      acc match {
+        case head :: tail if (head._2 == x) => (head._1 + 1, head._2) :: tail
+        case _ => (1, x) :: acc
+      }
+    }
+    ).reverse
+  }
+
 }
