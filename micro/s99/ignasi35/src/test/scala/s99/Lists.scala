@@ -87,12 +87,12 @@ class ListsSpec extends FlatSpec with ShouldMatchers {
     duplicate(List('a, 'b, 'c, 'c, 'd)) should be(List('a, 'a, 'b, 'b, 'c, 'c, 'c, 'c, 'd, 'd))
   }
 
+  it should "Duplicate the elements of a list a given number of times." in {
+    duplicateN(3, List('a, 'b, 'c, 'c, 'd)) should be(List('a, 'a, 'a, 'b, 'b, 'b, 'c, 'c, 'c, 'c, 'c, 'c, 'd, 'd, 'd))
+  }
   /*
 
-P15 (**) Duplicate the elements of a list a given number of times.
-Example:
-scala> duplicateN(3, List('a, 'b, 'c, 'c, 'd))
-res0: List[Symbol] = List('a, 'a, 'a, 'b, 'b, 'b, 'c, 'c, 'c, 'c, 'c, 'c, 'd, 'd, 'd)
+res0: List[Symbol] =
 P16 (**) Drop every Nth element from a list.
 Example:
 scala> drop(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))

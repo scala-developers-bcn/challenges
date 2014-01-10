@@ -82,6 +82,10 @@ object Lists {
   }
 
   // I'd like to solve this in a single list traversal. :-(
-  def duplicate[T](xs:List[T]):List[T] = xs map { x => List(x,x)} flatten
+  def duplicate[T](xs:List[T]):List[T] = xs map { x => List(x,x)} flatMap(identity)
+
+
+  def duplicateN[T](factor:Int, xs:List[T]):List[T] =
+    xs.map{ x => Stream.continually(x).take(factor)}.flatMap(identity)
 
 }
