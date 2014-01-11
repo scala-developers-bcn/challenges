@@ -50,4 +50,27 @@ class Week1FlatSpec extends FlatSpec with Matchers with PropertyChecks {
     }
   }
 
+  "flatten (P07)" should "flat the input into a single list" in {
+    forAll { (list: List[List[Int]]) =>
+      flatten(list) should be (list.flatten)
+    }
+  }
+
+  "compress (P08)" should "replace repeated consecutive elements with a single instance" in {
+    forAll { (list: List[Boolean]) =>
+      val compressed = compress(list)
+      def isCompression[T](compressed: List[T], expanded: List[T]): Boolean = (compressed, expanded) match {
+        case (Nil, Nil) => true
+        case (x :: xs, y :: ys) if (x == y) => isCompression(xs, ys.dropWhile(_ == y))
+        case _ => false
+      }
+      isCompression(compressed, list) should be (true)
+
+      // Check if it's maximal compression
+      compressed.sliding(2) forall {
+        case List(x) => true
+        case List(x, y) => x != y
+      } should be (true)
+    }
+  }
 }

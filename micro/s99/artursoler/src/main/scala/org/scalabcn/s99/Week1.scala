@@ -34,5 +34,14 @@ object Week1 {
     inner(xs, List[T]())
   }
 
+  def flatten(xs: List[Any]): List[Any] =
+    xs flatMap {
+      case x: List[_] => flatten(x)
+      case x => List(x)
+    }
 
+  def compress[T](xs: List[T]): List[T] = xs match {
+    case Nil => Nil
+    case x :: xs => x :: compress(xs dropWhile (_ == x))
+  }
 }
