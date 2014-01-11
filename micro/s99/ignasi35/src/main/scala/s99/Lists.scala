@@ -108,5 +108,14 @@ object Lists {
     (removeIndex(front), removeIndex(back))
   }
 
+  def slice[T](offset: Int, length: Int, xs: List[T]): List[T] =
+    xs.drop(offset).take(length - offset)
+
+
+  def rotate[T](offset: Int , xs: List[T]) :List[T] ={
+    val (front, back) = split((length(xs) + offset) % length(xs),    xs)
+    back++front
+  }
+
 
 }
