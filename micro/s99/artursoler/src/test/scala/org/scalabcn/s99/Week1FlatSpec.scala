@@ -73,4 +73,12 @@ class Week1FlatSpec extends FlatSpec with Matchers with PropertyChecks {
       } should be (true)
     }
   }
+
+  "pack (P09)" should "group repeated consecutive elements into sublists" in {
+    forAll { (list: List[Boolean]) =>
+      val packed = pack(list)
+      packed forall (xs => xs forall (_ == xs.head)) should be (true)
+      packed.flatten should be (list)
+    }
+  }
 }

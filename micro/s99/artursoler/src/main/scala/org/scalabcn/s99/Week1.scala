@@ -44,4 +44,11 @@ object Week1 {
     case Nil => Nil
     case x :: xs => x :: compress(xs dropWhile (_ == x))
   }
+
+  def pack[T](xs: List[T]): List[List[T]] = xs match {
+    case Nil => Nil
+    case xs =>
+      val (take, drop) = xs span (_ == xs.head)
+      take :: pack(drop)
+  }
 }
