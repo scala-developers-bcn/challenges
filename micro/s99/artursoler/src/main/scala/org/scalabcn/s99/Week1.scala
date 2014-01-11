@@ -51,4 +51,6 @@ object Week1 {
       val (take, drop) = xs span (_ == xs.head)
       take :: pack(drop)
   }
+
+  def encode[T](xs: List[T]) = pack(xs) map (x => (x.length, x.head))
 }

@@ -81,4 +81,11 @@ class Week1FlatSpec extends FlatSpec with Matchers with PropertyChecks {
       packed.flatten should be (list)
     }
   }
+
+  "encode (P10)" should "perform run-length encoding" in {
+    forAll { (list: List[Boolean]) =>
+      val encoded = encode(list)
+      encoded flatMap { case (num: Int, value: Boolean) => List.fill(num)(value) } should be (list)
+    }
+  }
 }
