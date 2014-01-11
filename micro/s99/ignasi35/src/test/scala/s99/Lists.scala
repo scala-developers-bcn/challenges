@@ -114,15 +114,10 @@ class ListsSpec extends FlatSpec with ShouldMatchers {
   }
 
 
-  /*
-P20 (*) Remove the Kth element from a list.
-Return the list and the removed element in a Tuple. Elements are numbered from 0.
-Example:
+  it should "Remove the Kth element from a list. Return the list and the removed element in a Tuple. Elements are numbered from 0." in {
+    removeAt(1, List('a, 'b, 'c, 'd))    should be (List('a, 'c, 'd),'b)
 
-scala> removeAt(1, List('a, 'b, 'c, 'd))
-res0: (List[Symbol], Symbol) = (List('a, 'c, 'd),'b)
-
- */
+  }
 
 
 }
