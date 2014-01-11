@@ -86,7 +86,7 @@ object Lists {
     x => List(x, x)
   } flatMap (identity)
 
-
+ // I just saw on pulpillo now what I should have done in the first place. x.map(f).flatMap(identity) can actually be rewriten as x.flatMap(f)
   def duplicateN[T](factor: Int, xs: List[T]): List[T] =
     xs.map {
       x => Stream.continually(x).take(factor)
