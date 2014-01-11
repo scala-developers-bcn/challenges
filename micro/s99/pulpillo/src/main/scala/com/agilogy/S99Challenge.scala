@@ -58,5 +58,51 @@ class S99Challenge {
     val packed = pack(x)
     packed.map(elem => (elem.size,elem.head))
   }
+
+  def encodeModified[A](x : List[A]) = {
+    val packed = pack(x)
+    packed.map(elem => if(elem.size > 1)(elem.size,elem.head) else elem.head)
+  }
+
+  def decode[A](x : List[(Int,A)]) = {
+
+    def expand(x : (Int,A)): List[A] =  x._1 match{
+      case 0 => List()
+      case n => x._2::expand((x._1 - 1,x._2))
+    }
+
+    x.flatMap(expand(_))
+  }
+
+  def encodeDirect[A](x : List[A]) = {
+    (x.foldRight(List[List[A]]()){
+      (elem,acum) =>
+        if(acum.isEmpty || acum.head.head != elem) List(elem) :: acum
+      else  (elem :: acum.head) :: acum.tail
+    }).map(elem => (elem.size,elem.head))
+  }
+
+  def duplicate[A](x : List[A]) = {
+    x.flatMap(List.fill(2)(_))
+  }
+
+  def duplicateN[A](n: Int, x : List[A]) = {
+    x.flatMap(List.fill(n)(_))
+  }
+
+  def drop[A](n: Int, x : List[A]): List[A] =  x match {
+    case Nil => Nil
+    case xs => {
+      val (l,r) = xs splitAt(n - 1)
+      if(r.isEmpty)
+        l
+      else
+        l ++ drop(n,r.tail)
+    }
+  }
+
+  def split[A](n: Int, x : List[A]):(List[A],List[A]) =  x splitAt(n)
+
+  def slice[A](from: Int, to: Int, x : List[A]) =  x slice(from,to)
 }
 
