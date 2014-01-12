@@ -1,0 +1,15 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           controllers.Application.index
+
+# Hello action
+GET     /hello                      controllers.Application.sayHello
+
+# FlyApp routes
+GET	/flights/to/:id		    controllers.Flights.showTo(id: Long)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
