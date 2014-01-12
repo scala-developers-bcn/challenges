@@ -83,4 +83,25 @@ class Week2FlatSpec extends FlatSpec with ShouldMatchers {
   it should "rotate to the right when the number of places is bigger than the length" in {
     rotate(-3, List('a, 'b)) should be(List('b, 'a))
   }
+
+  "P20" should "remove the nth element from a list" in {
+    removeAt(1, List('a, 'b, 'c, 'd)) should be((List('a, 'c, 'd),'b))
+  }
+
+  it should "remove the first element from a list" in {
+    removeAt(0, List('a, 'b, 'c)) should be((List('b, 'c), 'a))
+  }
+
+  it should "remove the last element from a list" in {
+    removeAt(2, List('a, 'b, 'c)) should be((List('a, 'b), 'c))  
+  }
+
+  it should "raise a IllegalArgumentException when the index is out of bounds" in {
+    intercept[IllegalArgumentException]{
+      removeAt(5, List('a, 'b))
+    }
+    intercept[IllegalArgumentException]{
+      removeAt(-1, List('a))
+    }
+  }
 }

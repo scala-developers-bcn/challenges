@@ -59,4 +59,12 @@ object Week2 {
       parts._2 ::: parts._1
     }
   }
+
+  def removeAt[T](n: Int, x: List[T]): (List[T], T) = {
+    if(n < 0 || n > x.length - 1) throw new java.lang.IllegalArgumentException
+    val before = slice(0, n, x)
+    val after = slice(n, x.length, x)
+    (before ::: after.tail, after.head)
+  }
+
 }
