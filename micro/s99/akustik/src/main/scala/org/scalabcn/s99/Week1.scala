@@ -4,12 +4,12 @@ import scala.annotation.tailrec
 
 object Week1 {
 
-  def last[T](x: List[T]) = x.reverse match {
+  def last[T](x: List[T]) = reverse(x) match {
     case x :: xs => x
     case _ => throw new IllegalArgumentException("List not long enough")
   }
 
-  def penultimate[T](x: List[T]) = x.reverse match {
+  def penultimate[T](x: List[T]) = reverse(x) match {
     case x :: y :: xs => y
     case _ => throw new IllegalArgumentException("List not long enough")
   }
