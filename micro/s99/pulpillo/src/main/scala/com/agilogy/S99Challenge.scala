@@ -104,5 +104,19 @@ class S99Challenge {
   def split[A](n: Int, x : List[A]):(List[A],List[A]) =  x splitAt(n)
 
   def slice[A](from: Int, to: Int, x : List[A]) =  x slice(from,to)
+
+  def rotate[A](n: Int, x : List[A]) =  {
+    def calculateSplitIndex() = {
+      if(n >= 0) n
+      else x.size + n
+    }
+    val (l,r) = x.splitAt(calculateSplitIndex)
+    r:::l
+  }
+
+  def removeAt[A](n: Int, x : List[A]) =  {
+    val (l,r) = x.splitAt(n)
+    (l:::r.tail,r.head)
+  }
 }
 

@@ -100,7 +100,6 @@ class S99ChallengeFlatSpec extends FlatSpec with ShouldMatchers {
   "P18" should "Extract a slice from a list." in {
     s99.slice(3, 7, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be (List('d, 'e, 'f, 'g))
   }
-/*
   "P19" should "Rotate a list N places to the left." in {
     s99.rotate(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be (List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k, 'a, 'b, 'c))
   }
@@ -112,7 +111,10 @@ class S99ChallengeFlatSpec extends FlatSpec with ShouldMatchers {
   "P20" should "Remove the Kth element from a list." in {
     s99.removeAt(1, List('a, 'b, 'c, 'd)) should be ((List('a, 'c, 'd),'b))
   }
-  */
+
+  it should "Remove the nth element from a two element list" in {
+    s99.removeAt(1, List('a, 'b )) should be ((List('a),'b))
+  }
 }
 
 
