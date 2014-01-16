@@ -1,5 +1,7 @@
 package com.agilogy
 
+import scala.annotation.tailrec
+
 class S99Challenge {
 
   def last(x: List[Int]) = if (x.isEmpty) Nil else x.foldLeft(x.head)((_,c) => c)
@@ -64,4 +66,59 @@ class S99Challenge {
   })
 
   def decode[T](xs: List[(Int, T)]):List[T] = xs.flatMap(e => (1 to e._1).map(_ => e._2))
+
+  def encodeDirectRecursive(xs: List[Symbol]): List[(Int, Symbol)] = {
+    @tailrec
+    def encodeDirectHelper(xs: List[Symbol], acc: List[(Int, Symbol)]): List[(Int, Symbol)] = xs match {
+      case Nil => acc
+      case x :: ys if acc.isEmpty =>
+        encodeDirectHelper(ys, List((1, x)))
+      case x :: ys if acc.head._2 == x =>
+        encodeDirectHelper(ys, (acc.head._1+1,acc.head._2) :: acc.tail)
+      case x :: ys if acc.head._2 != x =>
+        encodeDirectHelper(ys, (1,x) :: acc)
+    }
+    encodeDirectHelper(xs, Nil).reverse
+  }
+
+  def encodeDirect[A](ls: List[A]): List[(Int, A)] =
+    if (ls.isEmpty) Nil
+    else {
+      val (packed, next) = ls span { _ == ls.head }
+      (packed.length, packed.head) :: encodeDirect(next)
+    }
+
+  def duplicate[T](xs: List[T]): List[T] =
+    xs.flatMap(x => List(x,x))
+
+  def duplicateN[T](n:Int, xs:List[T]): List[T] =
+    xs.flatMap(x => List.fill(n)(x))
+
+  def drop[T](n: Int, xs:List[T]): List[T] =
+    if (xs.isEmpty) Nil
+    else xs.take(n-1) ::: drop(n,xs.drop(n))
+
+  def split[T](n: Int, xs: List[T]) : (List[T], List[T]) =
+    (xs.take(n), xs.drop(n))
+
+  def slice[T](i:Int, k:Int, xs:List[T]):List[T] = Nil
+
+  def rotate[T](k:Int, xs:List[T]):List[T] = Nil
+
+  def removeAt[T](k:Int, xs:List[T]):(List[T],T) =
+    removeAt2(k,xs)
+
+  private def removeAt1[T](k:Int, xs:List[T]):(List[T],T) =
+    if (k<0 || k>xs.length) throw new NoSuchElementException
+    else (xs.take(k):::xs.drop(k+1),xs(k))
+
+  private def removeAt2[T](k:Int, xs:List[T]):(List[T],T) =
+    xs.splitAt(k) match {
+      case (_,Nil) => throw new NoSuchElementException
+      case (_,_) if k < 0 => throw new NoSuchElementException
+      case (left, x :: right) => (left:::right, x)
+
+
+    }
+
 }
