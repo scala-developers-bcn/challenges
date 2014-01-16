@@ -15,4 +15,15 @@ project/plugins/project/
 .settings
 .classpath
 .project
-.idea
+.cache
+
+# Play specific
+
+logs
+project/project
+project/target
+target
+tmp
+dist
+.cache
+.target
