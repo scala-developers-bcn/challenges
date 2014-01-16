@@ -101,9 +101,26 @@ class S99Challenge {
   def split[T](n: Int, xs: List[T]) : (List[T], List[T]) =
     (xs.take(n), xs.drop(n))
 
-  def slice[T](i:Int, k:Int, xs:List[T]):List[T] = Nil
+  def slice[T](i:Int, k:Int, xs:List[T]):List[T] =
+    if (i<0 || k> xs.length || i>k) throw new NoSuchElementException
+    else xs.splitAt(i)._2.splitAt(k-i)._1
 
-  def rotate[T](k:Int, xs:List[T]):List[T] = Nil
+  def rotate[T](k:Int, xs:List[T]):List[T] =
+    rotate2(k,xs)
+
+  private def rotate1[T](k:Int, xs:List[T]):List[T] = k match {
+    case 0 => xs
+    case _ if (k<0) => rotate(xs.length+k,xs)
+    case _ if (k>xs.length) => rotate(k%xs.length, xs)
+    case _ => rotate(k-1, xs.tail ::: List(xs.head))
+  }
+
+  def rotate2[T](k:Int, xs:List[T]):List[T] = k match {
+    case _ if (k<0) => rotate(xs.length+k,xs)
+    case _ if (k>xs.length) => rotate(k%xs.length, xs)
+    case _ => xs.drop(k) ::: xs.take(k)
+  }
+
 
   def removeAt[T](k:Int, xs:List[T]):(List[T],T) =
     removeAt2(k,xs)
@@ -117,8 +134,6 @@ class S99Challenge {
       case (_,Nil) => throw new NoSuchElementException
       case (_,_) if k < 0 => throw new NoSuchElementException
       case (left, x :: right) => (left:::right, x)
-
-
     }
 
 }

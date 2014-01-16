@@ -146,6 +146,25 @@ class S99ChallengeFlatSpec extends FlatSpec with Matchers {
     )
   }
 
+  it should "throw exception when incorrect indexes" in {
+    intercept[NoSuchElementException] {
+      s99.slice(8, 7, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
+    }
+  }
+
+  it should "throw exception when indexes too low" in {
+    intercept[NoSuchElementException] {
+      s99.slice(-1, 7, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
+    }
+  }
+
+  it should "throw exception when indexes too big" in {
+    intercept[NoSuchElementException] {
+      s99.slice(0, 17, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
+    }
+  }
+
+
   "P19" should "Rotate a list N places to the left" in {
     s99.rotate(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be (
       List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k, 'a, 'b, 'c)
@@ -164,13 +183,13 @@ class S99ChallengeFlatSpec extends FlatSpec with Matchers {
     )
   }
 
-  it should "return throw exection when too big index" in {
+  it should "throw exception when too big index" in {
     intercept[NoSuchElementException] {
       s99.removeAt(6, List('a, 'b, 'c, 'd))
     }
   }
 
-  it should "return throw exection when too low index" in {
+  it should "throw exception when too low index" in {
     intercept[NoSuchElementException] {
       s99.removeAt(-1, List('a, 'b, 'c, 'd))
     }
