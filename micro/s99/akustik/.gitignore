@@ -16,3 +16,6 @@ project/plugins/project/
 .classpath
 .project
 .cache
+
+#Vim specific
+*.swp
