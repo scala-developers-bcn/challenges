@@ -9,6 +9,39 @@ import org.scalabcn.s99.Week3._
 @RunWith(classOf[JUnitRunner])
 class Week3FlatSpec extends FlatSpec with ShouldMatchers {
 
+  "P28" should "sort a list of lists by its length" in {
+    lsort(List(List('a, 'b, 'c), List('d, 'e), List('f, 'g, 'h), List('d, 'e), List('i, 'j, 'k, 'l), List('m, 'n), List('o))) should be(List(List('o), List('d, 'e), List('d, 'e), List('m, 'n), List('a, 'b, 'c), List('f, 'g, 'h), List('i, 'j, 'k, 'l)))
+
+  }
+
+  it should "sort a list of lists by iths length frequency" in {
+    lsortFreq(List(List('a, 'b, 'c), List('d, 'e), List('f, 'g, 'h), List('d, 'e), List('i, 'j, 'k, 'l), List('m, 'n), List('o))) should be(List(List('i, 'j, 'k, 'l), List('o), List('a, 'b, 'c), List('f, 'g, 'h), List('d, 'e), List('d, 'e), List('m, 'n)))
+  }
+ 
+  "P27" should "generate combinations of groups of elements of a list" in {
+    var comb = group(List(2, 2, 5), List("Aldo", "Beat", "Carla", "David", "Evi", "Flip", "Gary", "Hugo", "Ida"))
+    comb.map (c => {
+      c.length should be(3)
+      assert(c.filter(_.length == 2).length === 2)
+      assert(c.filter(_.length == 5).length === 1)
+      assert(c.flatten.length === 9)
+      assert(c.flatten.groupBy(e => e).toList.length === 9)
+    })
+  }
+
+  "P26" should "generate the exact number of ways to choose k elements from a set of n" in {
+    val c = combinations(3, List('a, 'b, 'c, 'd, 'e, 'f))
+    c.length should be(20)
+    assert(c.filter(e => e.length != 3).length === 0)
+    assert(c.contains(List('a, 'b, 'c)))
+    assert(c.contains(List('a, 'b, 'd)))
+    assert(!c.contains(List('b, 'a, 'c)))
+  }
+
+  it should "generate an empty list when k is 0" in {
+    combinations(0, List('a, 'b)) should be(List())
+  }
+  
   "P25" should "generates a random permutation of the list" in {
     val x = List('a, 'b, 'c, 'd, 'e, 'f)
     val elements = randomPermute(x)

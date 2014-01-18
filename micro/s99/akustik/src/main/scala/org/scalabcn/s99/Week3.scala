@@ -45,4 +45,32 @@ object Week3 {
     randomSelect(x.length, x)
   }
 
+  //TODO: Find a tailrec version
+  def combinations[T](k: Int, x: List[T]): List[List[T]] = {
+    if(k > x.length || k == 0) Nil
+    else if(k == 1) x.map(List(_))
+    else {
+      combinations(k, x.tail) ::: combinations(k - 1, x.tail).map(x.head :: _)
+    }
+  }
+
+  //TODO: Find a tailrec version
+  def group[T](g: List[Int], x: List[T]): List[List[List[T]]] = {
+    g match {
+      case y :: ys => combinations(y, x).flatMap(c => group(ys, x diff c).map(c :: _))
+      case Nil => List(Nil)
+    }
+  }
+
+  def lsort[T](x: List[List[T]]): List[List[T]] = {
+    x.sortWith(_.length < _.length)
+  }
+
+  def lsortFreq[T](x: List[List[T]]): List[List[T]] = {
+    var freqs = x.map(_.length).groupBy(i => i).map{case (k, v) => (k, v.length)}
+    x.sortWith((a, b) => freqs(a.length) < freqs(b.length))
+  }
+
+
+
 }
