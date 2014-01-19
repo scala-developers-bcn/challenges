@@ -5,6 +5,8 @@ import org.junit.runner._
 import play.api.test._
 import play.api.test.Helpers._
 
+import play.api.libs.json._
+
 @RunWith(classOf[JUnitRunner])
 class IntegrationSpec extends Specification {
   
