@@ -30,7 +30,7 @@ trait FlightDB extends Logging {
 }
 
 class MemoryFlightDB extends FlightDB {
-  var flightDB = scala.collection.mutable.Map[String, Flight]()
+  var data = scala.collection.mutable.Map[String, Flight]()
 
   private val timestampInRange = (t: Long, from: Long, to: Long) => (from, to) match {
     case (0, 0) => true
@@ -40,11 +40,11 @@ class MemoryFlightDB extends FlightDB {
   }
 
   def insert(f: Flight) = {
-    flightDB.put(f.id, f).foreach(old => log("Removed previous flight: " + old))
+    data.put(f.id, f).foreach(old => log("Removed previous flight: " + old))
   }
 
   private def filter(sel: (Flight) => String, ts: (Flight) => Long)(id: String, from: Long, to: Long) = {
-    flightDB.filter {
+    data.filter {
       case (flightId, flight) => sel(flight) == id && timestampInRange(ts(flight), from, to)
     }.values
   }
@@ -58,7 +58,7 @@ class MemoryFlightDB extends FlightDB {
   }
 
   def updateStatus(id: String, status: String) = {
-    flightDB.get(id) match {
+    data.get(id) match {
       case Some(f) => {
         insert(Flight(f.id, f.from, f.to, f.arrival, f.departure, status))
       }
@@ -67,7 +67,7 @@ class MemoryFlightDB extends FlightDB {
   }
 
   def delete(id: String) = {
-    flightDB -= id
+    data -= id
   }
 }
 
@@ -75,7 +75,7 @@ object Flights extends Controller with Logging {
 
   implicit val flightReads = Json.reads[Flight]
   implicit val flightWrites = Json.writes[Flight]
-  implicit val db = new MemoryFlightDB
+  private val db: FlightDB = new MemoryFlightDB
 
   private val responseSuccess = Ok(Json.obj("result" -> "success"))
   private val responseFailure = Ok(Json.obj("result" -> "failure"))
