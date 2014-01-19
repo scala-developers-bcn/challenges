@@ -1,4 +1,4 @@
-package p02
+package s99
 
 /*
  * Find the last but one element of a list.
