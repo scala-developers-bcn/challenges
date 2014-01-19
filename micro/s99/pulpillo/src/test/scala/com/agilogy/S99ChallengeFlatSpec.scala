@@ -69,7 +69,52 @@ class S99ChallengeFlatSpec extends FlatSpec with ShouldMatchers {
     s99.encode(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) should be (List((4,'a), (1,'b), (2,'c), (2,'a), (1,'d), (4,'e)))
   }
 
+  "P11" should "Run modify length encode of a list " in {
+    s99.encodeModified(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) should be (List((4,'a), 'b, (2,'c), (2,'a), 'd, (4,'e)))
+  }
 
+  "P12" should "Decode a encoded list of problem 10" in {
+    s99.decode(List((4, 'a), (1, 'b), (2, 'c), (2, 'a), (1, 'd), (4, 'e))) should be (List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
+  }
+
+  "P13" should "Run-length encoding of a list (direct solution)." in {
+    s99.encodeDirect(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) should be ( List((4,'a), (1,'b), (2,'c), (2,'a), (1,'d), (4,'e)))
+  }
+
+  "P14" should "Duplicate the elements of a list." in {
+    s99.duplicate(List('a, 'b, 'c, 'c, 'd)) should be (List('a, 'a, 'b, 'b, 'c, 'c, 'c, 'c, 'd, 'd))
+  }
+
+  "P15" should "Duplicate the elements of a list a given number of times." in {
+    s99.duplicateN(3, List('a, 'b, 'c, 'c, 'd)) should be (List('a, 'a, 'a, 'b, 'b, 'b, 'c, 'c, 'c, 'c, 'c, 'c, 'd, 'd, 'd))
+  }
+
+  "P16" should "Drop every Nth element from a list." in {
+    s99.drop(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be (List('a, 'b, 'd, 'e, 'g, 'h, 'j, 'k))
+  }
+
+  "P17" should "Split a list into two parts" in {
+    s99.split(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be ((List('a, 'b, 'c),List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k)))
+  }
+
+  "P18" should "Extract a slice from a list." in {
+    s99.slice(3, 7, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be (List('d, 'e, 'f, 'g))
+  }
+  "P19" should "Rotate a list N places to the left." in {
+    s99.rotate(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be (List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k, 'a, 'b, 'c))
+  }
+
+  it should "Rotate a list N places to the left with negative number" in {
+    s99.rotate(-2, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be (List('j, 'k, 'a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i))
+  }
+
+  "P20" should "Remove the Kth element from a list." in {
+    s99.removeAt(1, List('a, 'b, 'c, 'd)) should be ((List('a, 'c, 'd),'b))
+  }
+
+  it should "Remove the nth element from a two element list" in {
+    s99.removeAt(1, List('a, 'b )) should be ((List('a),'b))
+  }
 }
 
 
