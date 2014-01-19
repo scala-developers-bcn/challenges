@@ -17,5 +17,17 @@ project/plugins/project/
 .project
 .cache
 
+# Play specific
+
+logs
+project/project
+project/target
+target
+tmp
+dist
+.cache
+.target
+
 #Vim specific
+
 *.swp

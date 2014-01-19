@@ -15,7 +15,7 @@ project/plugins/project/
 .settings
 .classpath
 .project
-.cache
 
-#Vim specific
-*.swp
+# IntelliJ specific 
+.idea/
+project/
