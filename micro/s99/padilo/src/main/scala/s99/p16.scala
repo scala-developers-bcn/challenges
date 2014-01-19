@@ -1,4 +1,5 @@
-package p16
+package s99
+
 /*
  * Drop every Nth element from a list.
  * Example:

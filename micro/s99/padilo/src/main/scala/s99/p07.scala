@@ -1,4 +1,4 @@
-package p07
+package s99
 
 /*
  * Flatten a nested list structure.

@@ -1,4 +1,4 @@
-package p06
+package s99
 
 /*
  * Find out whether a list is a palindrome.

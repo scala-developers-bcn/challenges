@@ -1,4 +1,4 @@
-package p08
+package s99
 
 /*
  *  Eliminate consecutive duplicates of list elements.

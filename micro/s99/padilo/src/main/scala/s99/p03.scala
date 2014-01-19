@@ -1,4 +1,4 @@
-package p99
+package s99
 
 import java.util.NoSuchElementException
 /*
