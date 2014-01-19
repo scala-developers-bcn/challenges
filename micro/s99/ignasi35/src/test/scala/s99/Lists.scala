@@ -99,30 +99,25 @@ class ListsSpec extends FlatSpec with ShouldMatchers {
     split(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be((List('a, 'b, 'c), List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k)))
   }
 
-  /*
+
+  it should "Extract a slice from a list. Given two indices, I and K, the slice is the list containing the elements from and including the Ith element up to but not including the Kth element of the original list. Start counting the elements with 0." in {
+    slice(3, 7, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be(List('d, 'e, 'f, 'g))
+  }
 
 
-P18 (**) Extract a slice from a list.
-Given two indices, I and K, the slice is the list containing the elements from and including the Ith element up to but not including the Kth element of the original list. Start counting the elements with 0.
-Example:
+  it should "Rotate a list N places to the left where N is positive." in {
+    rotate(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be(List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k, 'a, 'b, 'c))
+  }
 
-scala> slice(3, 7, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
-res0: List[Symbol] = List('d, 'e, 'f, 'g)
-P19 (**) Rotate a list N places to the left.
-Examples:
-scala> rotate(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
-res0: List[Symbol] = List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k, 'a, 'b, 'c)
+  it should "Rotate a list N places to the left where N is negative." in {
+    rotate(-2, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be(List('j, 'k, 'a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i))
+  }
 
-scala> rotate(-2, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
-res1: List[Symbol] = List('j, 'k, 'a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i)
-P20 (*) Remove the Kth element from a list.
-Return the list and the removed element in a Tuple. Elements are numbered from 0.
-Example:
 
-scala> removeAt(1, List('a, 'b, 'c, 'd))
-res0: (List[Symbol], Symbol) = (List('a, 'c, 'd),'b)
+  it should "Remove the Kth element from a list. Return the list and the removed element in a Tuple. Elements are numbered from 0." in {
+    removeAt(1, List('a, 'b, 'c, 'd)) should be(List('a, 'c, 'd), 'b)
 
-   */
+  }
 
 
 }

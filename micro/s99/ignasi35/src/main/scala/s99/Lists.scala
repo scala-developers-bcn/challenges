@@ -67,9 +67,9 @@ object Lists {
   }
 
   def decode[T](xs: List[(Int, T)]): List[T] =
-    xs.map {
+    xs flatMap {
       t: (Int, T) => Stream.continually(t._2).take(t._1).toList
-    }.flatten
+    }
 
   def encodeDirect[T](xs: List[T]): List[(Int, T)] = {
     xs.foldLeft(List[(Int, T)]())((acc, x) => {
@@ -81,16 +81,14 @@ object Lists {
     ).reverse
   }
 
-  // I'd like to solve this in a single list traversal. :-(
-  def duplicate[T](xs: List[T]): List[T] = xs map {
+  def duplicate[T](xs: List[T]): List[T] = xs flatMap {
     x => List(x, x)
-  } flatMap (identity)
-
+  }
 
   def duplicateN[T](factor: Int, xs: List[T]): List[T] =
-    xs.map {
+    xs.flatMap {
       x => Stream.continually(x).take(factor)
-    }.flatMap(identity)
+    }
 
   // This requires 2 list traversals :-(
   def drop[T](factor: Int, xs: List[T]): List[T] =
@@ -106,6 +104,20 @@ object Lists {
       case (x, i) => i < pointCut
     }
     (removeIndex(front), removeIndex(back))
+  }
+
+  def slice[T](offset: Int, length: Int, xs: List[T]): List[T] =
+    xs.drop(offset).take(length - offset)
+
+
+  def rotate[T](offset: Int, xs: List[T]): List[T] = {
+    val (front, back) = split((length(xs) + offset) % length(xs), xs)
+    back ++ front
+  }
+
+  def removeAt[T](index:Int, xs: List[T]):(List[T], T) = {
+    val (front, back) = split(index, xs)
+    (front++back.tail, back.head)
   }
 
 
