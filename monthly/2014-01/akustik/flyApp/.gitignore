@@ -27,3 +27,7 @@ tmp
 dist
 .cache
 .target
+
+#Vim specific
+
+*.swp

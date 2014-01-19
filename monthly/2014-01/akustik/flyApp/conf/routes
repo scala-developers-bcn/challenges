@@ -9,7 +9,8 @@ GET     /                           controllers.Application.index
 GET     /hello                      controllers.Application.sayHello
 
 # FlyApp routes
-GET	/flights/to/:id		    controllers.Flights.showTo(id: Long)
+POST	/flight/new		    controllers.Flights.create()
+GET	/flights/to/:id		    controllers.Flights.to(id: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
