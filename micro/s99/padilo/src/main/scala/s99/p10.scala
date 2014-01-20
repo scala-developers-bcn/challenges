@@ -1,6 +1,4 @@
-package p10
-
-import p09._
+package s99
 
 /*
  * Run-length encoding of a list.

@@ -1,4 +1,4 @@
-package p09
+package s99
 
 /*
  * Pack consecutive duplicates of list elements into sublists.

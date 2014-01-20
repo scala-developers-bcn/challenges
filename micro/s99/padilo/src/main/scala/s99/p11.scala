@@ -1,6 +1,4 @@
-package p11
-
-import p10._
+package s99
 
 /*
  * Modified run-length encoding.

@@ -1,4 +1,4 @@
-package p05
+package s99
 
 object p05 {
   /*
