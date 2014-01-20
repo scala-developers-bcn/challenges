@@ -17,6 +17,8 @@ trait FlightServiceComponent {
 
     def updateFlight(flight: Flight)
 
+    def tryFindById(id:Long): Option[Flight]
+
     def findFlights(f:Flight => Boolean): Option[List[Flight]]
 
     def deleteFlight(id: Long)
@@ -38,6 +40,10 @@ trait FlightServiceComponentImpl extends FlightServiceComponent {
 
     override def updateFlight(flight: Flight) {
       flightRepository.updateFlight(flight)
+    }
+
+    override def tryFindById(id:Long): Option[Flight] = {
+      flightRepository.tryFindById(id)
     }
 
     override def findFlights(f:Flight => Boolean): Option[List[Flight]] = {

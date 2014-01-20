@@ -4,6 +4,7 @@ import java.util.concurrent.atomic.AtomicLong
 import models.Airport
 import models.Flight
 import scala.collection.concurrent.TrieMap
+import com.github.nscala_time.time.Imports._
 
 trait FlightRepositoryComponent {
 
@@ -18,6 +19,8 @@ trait FlightRepositoryComponent {
     def delete(id : Long)
 
     def find(f:Flight => Boolean): Option[List[Flight]]
+
+    def tryFindById(id:Long): Option[Flight]
 
   }
 }
@@ -50,7 +53,7 @@ trait FlightRepositoryComponentImpl extends FlightRepositoryComponent {
 
    private def generateFlights() = {
      for(i <- 0L until 100L){
-       createFlight(Flight(Option(i),getRandomAirport(),"12:00",getRandomAirport(),"23:00","STATUS"))
+       createFlight(Flight(Option(i),getRandomAirport(),DateTime.now,getRandomAirport(),DateTime.now + 2.hours,"STATUS"))
      }
    }
 
@@ -74,6 +77,10 @@ trait FlightRepositoryComponentImpl extends FlightRepositoryComponent {
 
    override def find(f: Flight => Boolean): Option[List[Flight]] = {
      Option(flights.values.toList.filter(f))
+   }
+
+   override def tryFindById(id:Long): Option[Flight] = {
+     flights.get(id)
    }
  }
 
