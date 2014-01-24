@@ -7,7 +7,7 @@ import scala.util.Random
  * scala> lotto(6, 49)
  * res0: List[Int] = List(23, 1, 17, 33, 21, 37)
  */
-object p24 {
+object P24 {
   def main(args: Array[String]) {
     println(lotto(6, 49))
     println(lotto2(6, 49))
@@ -19,5 +19,5 @@ object p24 {
   
   // Phil's solution
   def lotto2(count: Int, max: Int): List[Int] = 
-    p23.randomSelect(count, List.range(1, max + 1))
+    P23.randomSelect(count, List.range(1, max + 1))
 }

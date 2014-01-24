@@ -8,7 +8,7 @@ import scala.annotation.tailrec
  * scala> range(4, 9)
  * res0: List[Int] = List(4, 5, 6, 7, 8, 9)
  */
-object p22 {
+object P22 {
   def main(args: Array[String]) = {
     def test(name: String, f: (Int, Int) => List[Int]) = {
 

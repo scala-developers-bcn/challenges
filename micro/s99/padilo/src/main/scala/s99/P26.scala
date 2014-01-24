@@ -10,7 +10,7 @@ import scala.annotation.tailrec
  * scala> combinations(3, List('a, 'b, 'c, 'd, 'e, 'f))
  * res0: List[List[Symbol]] = List(List('a, 'b, 'c), List('a, 'b, 'd), List('a, 'b, 'e), ...
 */
-object p26 {
+object P26 {
   def main(args: Array[String]) {
     val test = List('a, 'b, 'c, 'd, 'e, 'f)
 

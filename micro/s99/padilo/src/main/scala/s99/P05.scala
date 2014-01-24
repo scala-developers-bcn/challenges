@@ -1,6 +1,6 @@
 package s99
 
-object p05 {
+object P05 {
   /*
    * Reverse a list.
    * Example:

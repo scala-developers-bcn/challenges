@@ -10,14 +10,14 @@ import scala.collection.mutable.ArraySeq
  * scala> randomPermute(List('a, 'b, 'c, 'd, 'e, 'f))
  * res0: List[Symbol] = List('b, 'a, 'd, 'c, 'e, 'f)
  */
-object p25 {
+object P25 {
   def main(args: Array[String]) = {
 	  println(randomPermute(List('a, 'b, 'c, 'd, 'e, 'f)))
   }
   
   // Using P23
   def randomPermute[T](l:List[T]):List[T] = {
-    p23.randomSelect(l.length, l)
+    P23.randomSelect(l.length, l)
   }
   
 }

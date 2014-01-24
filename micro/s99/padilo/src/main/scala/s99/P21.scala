@@ -7,7 +7,7 @@ import scala.annotation.tailrec
  * scala> insertAt('new, 1, List('a, 'b, 'c, 'd))
  * res0: List[Symbol] = List('a, 'new, 'b, 'c, 'd)
  */
-object p21 {
+object P21 {
   def main(args: Array[String]) = {
     def test(name: String, f: (Symbol, Int, List[Symbol]) => List[Symbol]) = {
       val l = List('a, 'b, 'c, 'd)

@@ -6,10 +6,10 @@ package s99
  * scala> drop(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
  * res0: List[Symbol] = List('a, 'b, 'd, 'e, 'g, 'h, 'j, 'k)
  */
-object p16 {
+object P16 {
   def main(args: Array[String]) = {
     println(drop(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)))
-    println(drop2(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)))
+    println(droP2(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)))
   }
 
   // recursive
@@ -25,7 +25,7 @@ object p16 {
   }
 
   // tail recursive
-  def drop2[T](n: Int, l: List[T]): List[T] = {
+  def droP2[T](n: Int, l: List[T]): List[T] = {
    def dropTR[T](i: Int, l: List[T], result:List[T]): List[T] = {
      (i,l) match {
        case (1,_::t) => dropTR(n, t, result)

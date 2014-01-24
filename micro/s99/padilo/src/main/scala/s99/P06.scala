@@ -6,7 +6,7 @@ package s99
  * scala> isPalindrome(List(1, 2, 3, 2, 1))
  * res0: Boolean = true
  */
-object p06 {
+object P06 {
   def main(args: Array[String]): Unit = {
     println(isPalindrome3(List(1, 2, 3, 2, 1)))
   }

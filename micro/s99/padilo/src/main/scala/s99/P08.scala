@@ -8,7 +8,7 @@ package s99
  *  scala> compress(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
  *  res0: List[Symbol] = List('a, 'b, 'c, 'a, 'd, 'e)
  */
-object p08 {
+object P08 {
   def main(args: Array[String]): Unit = {
     val input = List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
 

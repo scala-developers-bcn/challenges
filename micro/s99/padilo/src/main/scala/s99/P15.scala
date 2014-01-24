@@ -6,7 +6,7 @@ package s99
  * scala> duplicateN(3, List('a, 'b, 'c, 'c, 'd))
  * res0: List[Symbol] = List('a, 'a, 'a, 'b, 'b, 'b, 'c, 'c, 'c, 'c, 'c, 'c, 'd, 'd, 'd)
  */
-object p15 {
+object P15 {
   def main(args: Array[String]) = {
     println(duplicateN(3, List('a, 'b, 'c, 'c, 'd)))
     println(duplicateN2(3, List('a, 'b, 'c, 'c, 'd)))
