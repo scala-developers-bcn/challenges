@@ -1,0 +1,11 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+POST    /flights                     @controllers.Application.addFlight
+GET     /flights                     @controllers.Application.getFlights          
+GET     /flights/from/:cityCode      @controllers.Application.getFlightsFrom(cityCode)
+GET     /flights/to/:cityCode        @controllers.Application.getFlightsTo(cityCode)
+PUT     /flights                     @controllers.Application.updateFlight
+

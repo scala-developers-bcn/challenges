@@ -115,9 +115,9 @@ object Lists {
     back ++ front
   }
 
-  def removeAt[T](index:Int, xs: List[T]):(List[T], T) = {
+  def removeAt[T](index: Int, xs: List[T]): (List[T], T) = {
     val (front, back) = split(index, xs)
-    (front++back.tail, back.head)
+    (front ++ back.tail, back.head)
   }
 
 
