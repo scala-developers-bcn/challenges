@@ -7,7 +7,7 @@ trait FlightsRepository {
 }
 
 class InMemFlightsRepository extends FlightsRepository {
-  private val flights = List(Flight("ON_TIME", "BOS", "CHG", "19B"))
+  private val flights = List()
   def loadAll(): List[Flight] = flights
 }
 
