@@ -3,7 +3,9 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index
+POST    /flights                     controllers.Application.addFlight
+GET     /flights                     controllers.Application.getFlights          
+GET     /flights/from/:cityCode      controllers.Application.getFlightsFrom(cityCode)
+GET     /flights/to/:cityCode        controllers.Application.getFlightsTo(cityCode)
+PUT     /flights                     controllers.Application.updateFlight
 
-# Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
