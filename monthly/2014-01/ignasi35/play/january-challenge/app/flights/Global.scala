@@ -1,8 +1,8 @@
 package flights
 
 import controllers.Application
-import controllers.InMemFlightsRepository
 import play.GlobalSettings
+import repositories.InMemFlightsRepository
 
 class Global extends GlobalSettings {
 
