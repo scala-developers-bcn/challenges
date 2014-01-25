@@ -14,29 +14,22 @@ trait FlightRepository {
   def loadAll(): List[Flight]
 }
 
-object InMemFlightsRepository extends FlightRepository {
+class InMemFlightsRepository extends FlightRepository {
   private val flights = List(Flight("ON_TIME", "BOS", "CHG", "19B"))
   def loadAll(): List[Flight] = flights
 }
 
-object Application extends Controller {
+class Application(flightRepo: FlightRepository) extends Controller {
 
   import Protocol._
-
-  def addFlight = Action { NotFound }
-
   def getFlights = Action {
-    Ok(Json.toJson(InMemFlightsRepository.loadAll))
+    Ok(Json.toJson(flightRepo.loadAll))
   }
 
+  def addFlight = Action { NotFound }
   // TODO filter by date range
   def getFlightsFrom(cityCode: String) = Action { NotFound }
-
-  // TODO filter by date range
   def getFlightsTo(cityCode: String) = Action { NotFound }
-
   def updateFlight = Action { NotFound }
-
-  // def delete
 
 }
