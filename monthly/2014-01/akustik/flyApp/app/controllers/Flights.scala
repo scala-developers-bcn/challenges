@@ -5,77 +5,14 @@ import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
 import views._
-
 import play.api.libs.json._
+import model.Flight
+import repositories.FlightsRepository
 
-case class Flight(id: String, from: String, to: String,
-  arrival: Long, departure: Long, status: String)
-
-trait Logging {
-  def log(msg: String) = {
-    println(s"LOG: $msg")
-  }
-
-  def error(msg: String) = {
-    println(s"ERROR: $msg")
-  }
-}
-
-trait FlightDB extends Logging {
-  def insert(f: Flight)
-  def flightsTo(id: String, from: Long, to: Long): Iterable[Flight]
-  def flightsFrom(id: String, from: Long, to: Long): Iterable[Flight]
-  def updateStatus(id: String, status: String)
-  def delete(id: String)
-}
-
-class MemoryFlightDB extends FlightDB {
-  var data = scala.collection.mutable.Map[String, Flight]()
-
-  private val timestampInRange = (t: Long, from: Long, to: Long) => (from, to) match {
-    case (0, 0) => true
-    case (0, b) => t <= b
-    case (a, 0) => a <= t
-    case (a, b) => a <= t && t <= b
-  }
-
-  def insert(f: Flight) = {
-    data.put(f.id, f).foreach(old => log("Removed previous flight: " + old))
-  }
-
-  private def filter(sel: (Flight) => String, ts: (Flight) => Long)(id: String, from: Long, to: Long) = {
-    data.filter {
-      case (flightId, flight) => sel(flight) == id && timestampInRange(ts(flight), from, to)
-    }.values
-  }
-
-  def flightsTo(id: String, from: Long, to: Long): Iterable[Flight] = {
-    filter(f => f.to, f => f.arrival)(id, from, to)
-  }
-
-  def flightsFrom(id: String, from: Long, to: Long): Iterable[Flight] = {
-    filter(f => f.from, f => f.arrival)(id, from, to)
-  }
-
-  def updateStatus(id: String, status: String) = {
-    data.get(id) match {
-      case Some(f) => {
-        insert(Flight(f.id, f.from, f.to, f.arrival, f.departure, status))
-      }
-      case None => throw new IllegalStateException(s"Flight ${id} not found")
-    }
-  }
-
-  def delete(id: String) = {
-    data -= id
-  }
-}
-
-object Flights extends Controller with Logging {
+class Flights(flightsRepo: FlightsRepository) extends Controller {
 
   implicit val flightReads = Json.reads[Flight]
   implicit val flightWrites = Json.writes[Flight]
-  private val db: FlightDB = new MemoryFlightDB
 
   private val responseSuccess = Ok(Json.obj("result" -> "success"))
   private val responseFailure = Ok(Json.obj("result" -> "failure"))
@@ -94,7 +31,7 @@ object Flights extends Controller with Logging {
                 responseSuccess
               } catch {
                 case e: Throwable => {
-                  error(e.toString())
+                  Logger.error(e.toString())
                   responseFailure
                 }
               }
@@ -103,7 +40,7 @@ object Flights extends Controller with Logging {
         }.recoverTotal {
           e =>
             {
-              error(e.toString)
+              Logger.error(e.toString)
               responseJsonError
             }
         }
@@ -115,7 +52,7 @@ object Flights extends Controller with Logging {
       responseFlights(block)
     } catch {
       case e: Throwable => {
-        error(e.toString())
+        Logger.error(e.toString())
         responseFailure
       }
     }
@@ -127,30 +64,30 @@ object Flights extends Controller with Logging {
       responseSuccess
     } catch {
       case e: Throwable => {
-        error(e.toString())
+        Logger.error(e.toString())
         responseFailure
       }
     }
   }
 
   def create() = {
-    validateAndExecute(_.validate[Flight], (f: Flight) => db.insert(f))
+    validateAndExecute(_.validate[Flight], (f: Flight) => flightsRepo.insert(f))
   }
 
   def to(id: String, from: Long, to: Long) = list {
-    db.flightsTo(id, from, to)
+    flightsRepo.flightsTo(id, from, to)
   }
 
   def from(id: String, from: Long, to: Long) = list {
-    db.flightsFrom(id, from, to)
+    flightsRepo.flightsFrom(id, from, to)
   }
 
   def delete(id: String) = execute {
-    db.delete(id)
+    flightsRepo.delete(id)
   }
 
   def updateStatus(id: String) = validateAndExecute(_.validate[String], (status: String) => {
-    db.updateStatus(id, status)
+    flightsRepo.updateStatus(id, status)
   })
 
 }
