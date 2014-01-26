@@ -7,13 +7,16 @@ import repositories.FlightsRepository
 import flights.Global
 import repositories.InMemFlightsRepository
 
-class FlightsControllerSpec extends Specification {
+trait FlightsFixtures {
+  val flightFixture001 = Flight("AA 289", 1393568400000L, 1393576800000L,
+    "BOS", "CHI", "SCHEDULED")
+}
+
+class FlightsControllerSpec extends Specification with FlightsFixtures {
 
   val globalForTest = new Global {
     override def flightRepo = new InMemFlightsRepository {
-      override def loadAll(): List[Flight] =
-        List(Flight("AA 289", 1393568400000L, 1393576800000L,
-          "BOS", "CHI", "SCHEDULED"))
+      override def loadAll(): List[Flight] = List(flightFixture001)
     }
   }
 
