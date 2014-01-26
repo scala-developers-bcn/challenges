@@ -54,7 +54,6 @@ class ListsTest extends FlatSpec with ShouldMatchers {
     def test = List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30)
     val result = P27.groupN(test, test.length)
 
-    println(result)
     result.length should be(1)
     result(0).length should be(test.length)
   }
@@ -63,7 +62,6 @@ class ListsTest extends FlatSpec with ShouldMatchers {
     def test = List(1, 1, 1)
     val result = P27.groupN(test, test.length)
 
-    println(result)
     result.length should be(1)
     result(0).length should be(test.length)
   }
@@ -119,5 +117,52 @@ class ListsTest extends FlatSpec with ShouldMatchers {
     result should be(theExpected)
   }
 
+  "P28.lsort(...)" should "work correcly with test1" in {
+    val test = List(List('a, 'b, 'c), List('d, 'e), List('f, 'g, 'h), List('d, 'e), List('i, 'j, 'k, 'l), List('m, 'n), List('o))
+    val theExpected = List(List('o), List('d, 'e), List('d, 'e), List('m, 'n), List('a, 'b, 'c), List('f, 'g, 'h), List('i, 'j, 'k, 'l))
+
+    P28.lsort(test) should be(theExpected)
+  }
+
+  it should "work correcly with test2" in {
+    val test = List(List('a, 'b, 'c), List('d, 'e), List('f, 'g, 'h), List('m, 'n), List('i, 'j, 'k, 'l), List('d, 'e), List('o))
+    val theExpected = List(List('o), List('d, 'e), List('d, 'e), List('m, 'n), List('a, 'b, 'c), List('f, 'g, 'h), List('i, 'j, 'k, 'l))
+
+    P28.lsort(test) should be(theExpected)
+  }
+
+  it should "work correcly with List(List())" in {
+    val test = List(List())
+    val theExpected = List(List())
+
+    P28.lsort(test) should be(theExpected)
+  }
+
+  "P28.lsortFreq(...)" should "work correcly with List(List())" in {
+    val test = List(List())
+    val theExpected = List(List())
+
+    P28.lsortFreq(test) should be(theExpected)
+  }
+
+  it should "work correcly with test1" in {
+    val test = List(List('a, 'b, 'c), List('d, 'e), List('f, 'g, 'h), List('d, 'e), List('i, 'j, 'k, 'l), List('m, 'n), List('o))
+    val theExpected = List(List('i, 'j, 'k, 'l), List('o), List('a, 'b, 'c), List('f, 'g, 'h), List('d, 'e), List('d, 'e), List('m, 'n))
+
+    P28.lsortFreq(test) should be(theExpected)
+  }
+
+  it should "work correcly with 1 element" in {
+    val test = List(List('z, 'b, 'c))
+
+    P28.lsortFreq(test) should be(test)
+  }
+
+  it should "work with simple sublists of 1 element" in {
+    val test = List(List('c), List('b), List('a))
+    val theExpected = List(List('a), List('b), List('c))
+
+    P28.lsortFreq(test) should be(theExpected)
+  }
 
 }
