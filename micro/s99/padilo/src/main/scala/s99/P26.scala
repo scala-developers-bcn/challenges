@@ -11,18 +11,9 @@ import scala.annotation.tailrec
  * res0: List[List[Symbol]] = List(List('a, 'b, 'c), List('a, 'b, 'd), List('a, 'b, 'e), ...
 */
 object P26 {
-  def main(args: Array[String]) {
-    val test = List('a, 'b, 'c, 'd, 'e, 'f)
+  def combinations[T](n: Int, l: List[T]): List[List[T]] = {
 
-    val result = combinations1(3, test)
-    println(result)
-    println(result.length == 20)
-
-  }
-
-  def combinations1(n: Int, l: List[Symbol]): List[List[Symbol]] = {
-
-    def rCombinations(i: Int, l: List[Symbol], comb: List[Symbol], result: List[List[Symbol]]): List[List[Symbol]] = {
+    def rCombinations(i: Int, l: List[T], comb: List[T], result: List[List[T]]): List[List[T]] = {
       if (i == 0) {
         comb.reverse :: result
       } else {
