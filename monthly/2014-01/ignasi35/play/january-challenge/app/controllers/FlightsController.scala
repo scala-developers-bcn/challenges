@@ -4,7 +4,8 @@ import play.api.libs.json._
 import play.api.mvc._
 import repositories.FlightsRepository
 
-case class Flight(status: String, origin: String, destiny: String, gate: String)
+case class Flight(id: String, arrival: Long, departure: Long,
+  from: String, to: String, status: String)
 
 object Protocol {
   implicit val fmtFlight = Json.format[Flight]

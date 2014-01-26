@@ -12,7 +12,8 @@ class FlightsControllerSpec extends Specification {
   val globalForTest = new Global {
     override def flightRepo = new InMemFlightsRepository {
       override def loadAll(): List[Flight] =
-        List(Flight("ON_TIME", "BOS", "CHG", "19B"))
+        List(Flight("AA 289", 1393568400000L, 1393576800000L,
+          "BOS", "CHI", "SCHEDULED"))
     }
   }
 
@@ -24,7 +25,7 @@ class FlightsControllerSpec extends Specification {
         status(flights) must equalTo(OK)
         contentType(flights) must beSome.which(_ == "application/json")
         contentAsString(flights) must equalTo(
-          """[{"status":"ON_TIME","origin":"BOS","destiny":"CHG","gate":"19B"}]""")
+          """[{"id":"AA 289","arrival":1393568400000,"departure":1393576800000,"from":"BOS","to":"CHI","status":"SCHEDULED"}]""")
       }
     }
 
