@@ -4,58 +4,64 @@
 
 package controllers
 
-/*import scala.concurrent.duration._
 import scala.concurrent.Await
-import org.junit._
 import org.junit.Assert._
-import org.mockito.Mockito._
+import org.junit.runner._
 import play.api.test._
 import play.api.test.Helpers._
 import play.api._
 import play.api.mvc._
 import play.api.libs.json._
-import services.FlightServiceComponent
-import models._*/
 
-/*class UserControllerTest {
+import org.specs2.mutable._
+import org.specs2.runner._
+import com.github.nscala_time.time.Imports._
+import org.specs2.mock._
+import controllers._
+import services._
+import models._
 
-  private val flightController = new FlightController with FlightServiceComponentMock {}
+@RunWith(classOf[JUnitRunner])
+class FlightsControllerTest extends Specification  {
 
-  @Test
-  def createFlight() {
-    val email = "abc@test.com"
-    val request = FakeRequest(POST, "/flights")
-      .withBody(
-        Json.obj(
-          "email" -> email
+  val flightController = new FlightsController with FlightServiceMockComponent{}
+  val airport = Airport(1L,"Barcelona")
+  val flight = Flight(Option.empty,airport,DateTime.now,airport,DateTime.now,"STATUS")
+
+  implicit val airportJSONFormat = Json.format[Airport]
+  implicit val flightJSONFormat = Json.format[Flight]
+
+  "Controller" should {
+
+    "Create new flight" in {
+      val request = FakeRequest(POST, "/flights")
+        .withBody(
+          Json.toJson(flight)
         )
-      )
 
-    val hey: Result = flightController.createFlight(request)
+      val hey = flightController.create()(request)
+      status(hey) must equalTo(201)
+      //there was one(flightController.flightService).createFlight(flight)
+    }
 
-    assertEquals(201, status(hey))
-    verify(userController.userService).createUser(User(Option.empty, email))
-  }
+    "Update the status " in {
+      val id = 1L
+      val updatedStatus = "CHANGED STATUS"
+      val flight = Flight(Option(1L), airport, DateTime.now, airport, DateTime.now, updatedStatus)
 
-  @Test
-  def updateUser() {
-    val id = 1
-    val request = FakeRequest(PUT, s"/users/$id")
-      .withBody(
-        Json.obj(
-          "email" -> "abc@test.com"
+      val request = FakeRequest(PUT, s"/flights/$id")
+        .withBody(
+          Json.toJson(flight)
         )
-      )
 
-    val hey: Result = userController.createUser(request)
-
-    assertEquals(201, status(hey))
+      val hey = flightController.updateStatus(id)(request)
+      status(hey) must equalTo(204)
+      //there was one(flightController.flightService).updateFlight(flight)
+    }
   }
-
 }
 
-trait FlightServiceComponentMock extends FlightServiceComponent {
+trait FlightServiceMockComponent extends FlightServiceComponent with Mockito {
 
-  override val fligthService = mock(classOf[FlightService])
-
-}*/
+  override val flightService = mock[FlightService]
+}
