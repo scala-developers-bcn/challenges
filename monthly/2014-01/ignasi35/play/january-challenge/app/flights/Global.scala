@@ -1,6 +1,6 @@
 package flights
 
-import controllers.Application
+import controllers.FlightsController
 import play.GlobalSettings
 import repositories.InMemFlightsRepository
 
@@ -14,7 +14,7 @@ import repositories.InMemFlightsRepository
 class Global extends GlobalSettings with play.api.GlobalSettings {
 
   def flightRepo = new InMemFlightsRepository
-  def flightCtlr = new Application(flightRepo)
+  def flightCtlr = new FlightsController(flightRepo)
 
   override def getControllerInstance[A](controllerClass: Class[A]): A = {
     flightCtlr.asInstanceOf[A]

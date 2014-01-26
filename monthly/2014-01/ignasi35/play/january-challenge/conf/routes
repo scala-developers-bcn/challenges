@@ -1,11 +1,11 @@
 # Routes
-# This file defines all application routes (Higher priority routes first)
+# This file defines all FlightsController routes (Higher priority routes first)
 # ~~~~
 
 # Home page
-POST    /flights                     @controllers.Application.addFlight
-GET     /flights                     @controllers.Application.getFlights          
-GET     /flights/from/:cityCode      @controllers.Application.getFlightsFrom(cityCode)
-GET     /flights/to/:cityCode        @controllers.Application.getFlightsTo(cityCode)
-PUT     /flights                     @controllers.Application.updateFlight
+POST    /flights                     @controllers.FlightsController.addFlight
+GET     /flights                     @controllers.FlightsController.getFlights          
+GET     /flights/from/:cityCode      @controllers.FlightsController.getFlightsFrom(cityCode)
+GET     /flights/to/:cityCode        @controllers.FlightsController.getFlightsTo(cityCode)
+PUT     /flights                     @controllers.FlightsController.updateFlight
 
