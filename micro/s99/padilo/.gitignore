@@ -18,3 +18,7 @@ project/plugins/project/
 .classpath
 .project
 .cache
+
+# My test Worksheet
+src/main/scala/test.sc
+
