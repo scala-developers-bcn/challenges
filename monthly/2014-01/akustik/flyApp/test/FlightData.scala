@@ -1,4 +1,6 @@
 import play.api.libs.json._
+import repositories.InMemoryFlightsRepository
+import repositories.RecordingFlightsRepository
 
 trait FlightData {
 
