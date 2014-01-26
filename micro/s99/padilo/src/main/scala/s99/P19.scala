@@ -9,7 +9,7 @@ package s99
  * scala> rotate(-2, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
  * res1: List[Symbol] = List('j, 'k, 'a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i)
  */
-object p19 {
+object P19 {
   def main(args: Array[String]) = {
     test("rotate", rotate)
     test("rotate2", rotate2)

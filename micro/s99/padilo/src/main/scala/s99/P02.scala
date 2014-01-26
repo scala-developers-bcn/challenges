@@ -6,7 +6,7 @@ package s99
  * scala> penultimate(List(1, 1, 2, 3, 5, 8))
  * res0: Int = 5
  */
-object p02 {
+object P02 {
   def main(args: Array[String]): Unit = {
     println(penultimate(List(1, 1, 2, 3, 5, 8)))
   }

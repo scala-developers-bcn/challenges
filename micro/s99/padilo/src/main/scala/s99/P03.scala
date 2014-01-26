@@ -9,7 +9,7 @@ import java.util.NoSuchElementException
  * scala> nth(2, List(1, 1, 2, 3, 5, 8))
  * res0: Int = 2
  */
-object p03 {
+object P03 {
         def main(args: Array[String]):Unit = {
                 println(nth(23, List(1, 1, 2, 3, 5, 8)))
                 println(nthMatch(23, List(1, 1, 2, 3, 5, 8)))

@@ -8,7 +8,7 @@ package s99
  * scala> slice(3, 7, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
  * res0: List[Symbol] = List('d, 'e, 'f, 'g) 
  */
-object p18 {
+object P18 {
   def main(args: Array[String]) = {
     val sample1 = List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)
     val sample2 = List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)
@@ -77,7 +77,7 @@ object p18 {
     l.drop(i).take(k - (i max 0))
   }
 
-  // Funny very inefficient solution, inspired by the one provided by Phil for p16
+  // Funny very inefficient solution, inspired by the one provided by Phil for P16
   def slice4[T](i: Int, k: Int, l: List[T]): List[T] = {
     l.zipWithIndex filter { v => v._2 >= i && v._2 < k } map (v => v._1)
 

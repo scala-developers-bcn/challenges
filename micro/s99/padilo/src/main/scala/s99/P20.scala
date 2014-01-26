@@ -1,6 +1,6 @@
 package s99
 
-object p20 {
+object P20 {
 
   /*
    * Remove the Kth element from a list.
