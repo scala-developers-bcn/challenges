@@ -22,23 +22,25 @@ object FlightStatus extends Enumeration {
 case class Flight(departure: DateTime, arrival: DateTime, from: String, to: String, status: FlightStatus.Value)
 
 trait FlightStore {
-  def listFilter(toFilter: Option[String], fromFilter: Option[String]): List[(String,Flight)]
-  def list(): List[(String,Flight)]
-  def store(key:String, flight: Flight): StoreResult
+  def listFilter(toFilter: Option[String], fromFilter: Option[String]): List[(String, Flight)]
+  def list(): List[(String, Flight)]
+  def store(key: String, flight: Flight): StoreResult
   def update(key: String, flight: Flight): ModifyResult
   def delete(key: String): ModifyResult
+
+  def putDefaultData() {
+    store("1", Flight(DateTime.now.hour(9).minute(5).second(0), DateTime.now.hour(10).minute(0).second(0), "Barcelona", "Madrid", FlightStatus.OnTime))
+    store("2", Flight(DateTime.now.hour(10).minute(20).second(0), DateTime.now.hour(11).minute(15).second(0), "Madrid", "Barcelona", FlightStatus.Delayed))
+    store("3", Flight(DateTime.now.hour(16).minute(10).second(0), DateTime.now.hour(17).minute(0).second(0), "Zaragoza", "Coruña", FlightStatus.Cancelled))
+    store("4", Flight(DateTime.now.hour(0).minute(20).second(0), DateTime.now.hour(12).minute(10).second(0), "Coruña", "Madrid", FlightStatus.OnTime))
+    store("5", Flight(DateTime.now.hour(12).minute(30).second(0), DateTime.now.hour(13).minute(45).second(0), "Barcelona", "Zaragoza", FlightStatus.OnTime))
+  }
 }
 
 object FlightMemStore extends FlightStore {
   private val dataMap = new mutable.HashMap[String, Flight]
 
-  dataMap("1") = Flight(DateTime.now.hour(9).minute(5).second(0), DateTime.now.hour(10).minute(0).second(0), "Barcelona", "Madrid", FlightStatus.OnTime)
-  dataMap("2") = Flight(DateTime.now.hour(10).minute(20).second(0), DateTime.now.hour(11).minute(15).second(0), "Madrid", "Barcelona", FlightStatus.Delayed)
-  dataMap("3") = Flight(DateTime.now.hour(16).minute(10).second(0), DateTime.now.hour(17).minute(0).second(0), "Zaragoza", "Coruña", FlightStatus.Cancelled)
-  dataMap("4") = Flight(DateTime.now.hour(0).minute(20).second(0), DateTime.now.hour(12).minute(10).second(0), "Coruña", "Madrid", FlightStatus.OnTime)
-  dataMap("5") = Flight(DateTime.now.hour(12).minute(30).second(0), DateTime.now.hour(13).minute(45).second(0), "Barcelona", "Zaragoza", FlightStatus.OnTime)
-
-  def store(key:String, flight: Flight): StoreResult =
+  def store(key: String, flight: Flight): StoreResult =
     if (dataMap.contains(key)) {
       DataAlreadyExists
     } else {
@@ -68,11 +70,11 @@ object FlightMemStore extends FlightStore {
     }
   }
 
-  def list(): List[(String,Flight)] = {
+  def list(): List[(String, Flight)] = {
     listFilter(None, None)
   }
 
-  def listFilter(toFilter: Option[String], fromFilter: Option[String]): List[(String,Flight)] = {
+  def listFilter(toFilter: Option[String], fromFilter: Option[String]): List[(String, Flight)] = {
     def filterFunc(option: Option[String]) = option match {
       case Some(att) => {
         (flightAtt: String) =>
@@ -92,7 +94,7 @@ object FlightMemStore extends FlightStore {
       entry <- dataMap
       flight = entry._2
       key = entry._1
-      if(toFilterFunc(flight.to) && fromFilterFunc(flight.from) && DateTime.now <= flight.departure)
+      if (toFilterFunc(flight.to) && fromFilterFunc(flight.from) && DateTime.now <= flight.departure)
     } yield entry
 
     iterable.toList

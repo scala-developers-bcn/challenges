@@ -16,8 +16,9 @@ import com.github.nscala_time.time.Imports._
 
 //** unfiltered plan */
 class FlightPlan(flightStore: FlightStore = FlightMemStore) extends unfiltered.filter.Plan {
+  
+  flightStore.putDefaultData()
 
-  // it's simple to define your own directives
   def ensureContentType(tpe: String) =
     when { case RequestContentType(`tpe`) => } orElse UnsupportedMediaType
 
