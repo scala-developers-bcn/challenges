@@ -4,6 +4,7 @@ import unfiltered.response.ResponseString
 import net.pdiaz.flyapp.stores.Flight
 import net.pdiaz.flyapp.stores.FlightStatus
 import org.joda.time.format.ISODateTimeFormat
+import scala.language.implicitConversions
 
 package object app {
   implicit def string2ResponseString(s: String) = ResponseString(s)

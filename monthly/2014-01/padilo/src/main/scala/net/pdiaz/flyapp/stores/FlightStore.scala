@@ -37,7 +37,7 @@ trait FlightStore {
   }
 }
 
-object FlightMemStore extends FlightStore {
+class FlightMemStore extends FlightStore {
   private val dataMap = new mutable.HashMap[String, Flight]
 
   def store(key: String, flight: Flight): StoreResult =
