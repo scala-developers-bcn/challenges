@@ -55,10 +55,14 @@ trait FlightsController extends Controller {
 
   def updateStatus(id: Long) = Action(parse.json) {request =>
     unmarshalFlightResource(request, (resource: Flight) => {
-      //val user = User(Option(id),
-        //resource.email)
-      //userService.updateUser(user)
-      NoContent
+      val flight = flightService.tryFindById(id)
+      flight match {
+        case Some(fly) => {
+          flightService.updateFlight(fly.copy(status = resource.status))
+          NoContent
+        }
+        case None => NotFound
+      }
     })
   }
 

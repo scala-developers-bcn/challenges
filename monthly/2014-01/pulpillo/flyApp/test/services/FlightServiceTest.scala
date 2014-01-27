@@ -16,7 +16,6 @@ import models.Flight
 import models.Airport
 import services._
 
-@RunWith(classOf[JUnitRunner])
 class FlightServiceTest extends Specification
 with FlightServiceComponentImpl
 with FlightRepositoryMockComponent {
