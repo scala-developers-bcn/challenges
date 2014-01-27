@@ -57,11 +57,11 @@ trait FlightsController extends Controller {
     unmarshalFlightResource(request, (resource: Flight) => {
       val flight = flightService.tryFindById(id)
       flight match {
-        case None => NotFound
-        case Option => {
-          flightService.updateFlight(flight.copy(status = resource.status))
+        case Some(fly) => {
+          flightService.updateFlight(fly.copy(status = resource.status))
           NoContent
         }
+        case None => NotFound
       }
     })
   }
