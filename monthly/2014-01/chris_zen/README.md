@@ -71,9 +71,9 @@ The response body is a *JSON* array of flight descriptors.
 
 **PUT** */flights/<id>*
 
-The body contains the new *status* as plain text.
+The request body contains the new *status* as plain text. The response body is empty.
 
-Return *200 Ok" when success, "404 Not found" when the flight *id* is not found, and *400 Bad request* when the status is not correct.
+Return *200 Ok" when success, *400 Bad request* when the status is empty or not valid, and "404 Not found" when the flight *id* is not found.
 
 ### Delete a flight
 

@@ -7,9 +7,10 @@ import play.api.libs.functional.syntax._
 import scala.concurrent._
 import scala.concurrent.ExecutionContext.Implicits.global
 import org.joda.time.DateTime
-import play.api.Logger
 
 object FlightsService extends Controller {
+
+  val validStatus = Set("ONTIME", "DELAYED", "CANCELLED", "ONGATE")
 
   val dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
   implicit val jodaDateTimeReads = Reads.jodaDateReads(dateFormat)
@@ -25,7 +26,7 @@ object FlightsService extends Controller {
     ((__ \ "status").read[String] ~> (__ \ "status").json.pickBranch)
     ) reduce
 
-  var flights = Map[String, JsObject]()
+  var flights = collection.mutable.Map[String, JsObject]()
 
   def create = Action.async(parse.json) { request =>
 
@@ -60,9 +61,36 @@ object FlightsService extends Controller {
     future {
       val res = flights.values
                   .filter(flight => new DateTime((flight \ "departure").as[DateTime](jodaDateTimeReads)).compareTo(DateTime.now) >= 0)
-                  .filter(flight => query.fieldSet.map { case (k, v) => (flight \ k) == v}.foldLeft(true)((a, b) => a && b))
+                  .filter(flight => query.fieldSet.map { case (k, v) => (flight \ k) == v}.foldLeft(true)(_ && _))
 
       Ok(Json.toJson(res))
+    }
+  }
+
+  def status(id: String) = Action.async { request =>
+
+    future {
+      request.body.asText.filter(validStatus.contains(_)).map { status =>
+        flights.get(id).map { flight =>
+          //flights(id) = flight.transform((__ \ "status").json.put(JsString(status))).get
+          flights(id) = flight ++ Json.obj("status" -> JsString(status))
+          Ok
+        }.getOrElse {
+          NotFound
+        }
+      }.getOrElse {
+        BadRequest(s"Invalid status, expecting any of: $validStatus")
+      }
+    }
+  }
+
+  def delete(id: String) = Action.async { request =>
+    future {
+      flights.remove(id).map { flight =>
+        Ok
+      }.getOrElse {
+        NotFound
+      }
     }
   }
 }

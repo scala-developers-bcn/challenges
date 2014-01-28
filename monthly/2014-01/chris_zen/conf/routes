@@ -9,5 +9,7 @@ GET     /                           controllers.Application.index
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 # Fly app
-POST    /flights                    controllers.Flights.create
-GET     /flights                    controllers.Flights.query(from: Option[String], to: Option[String])
+POST    /flights                    controllers.FlightsService.create
+GET     /flights                    controllers.FlightsService.query(from: Option[String], to: Option[String])
+PUT     /flights/:id                controllers.FlightsService.status(id: String)
+DELETE  /flights/:id                controllers.FlightsService.delete(id: String)
