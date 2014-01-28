@@ -8,19 +8,19 @@ Written by Christian Pérez Llamas
 
 <table>
     <tr>
-        <td>**POST** */flights*</td>
+        <td><strong>POST</strong> <em>/flights</em></td>
         <td>Create a flight</td>
     </tr>
     <tr>
-        <td>**GET** */flights*</td>
+        <td><strong>GET</strong> <em>/flights</em></td>
         <td>List flights</td>
     </tr>
     <tr>
-        <td>**PUT** */flights/<id>*</td>
+        <td><strong>PUT</strong> <em>/flights/&lt;id&gt;</em></td>
         <td>Update flight status</td>
     </tr>
     <tr>
-        <td>**DELETE** */flights/<id>*</td>
+        <td><strong>DELETE</strong> <em>/flights/&lt;id&gt;</em></td>
         <td>Delete a flight</td>
     </tr>
 </table>
@@ -37,14 +37,16 @@ All the fields are strings. *departure* and *arrival* are *DateTime*'s encoded i
 
 Example:
 
-    {
-        "id" : "IB001",
-        "from" : "BCN",
-        "to": "PARIS",
-        "departure": "2014-01-28T12:35:00Z",
-        "arrival": "2014-01-28T13:30:00Z",
-        "status": "ONTIME"
-    }
+```json
+{
+    "id" : "IB001",
+    "from" : "BCN",
+    "to": "PARIS",
+    "departure": "2014-01-28T12:35:00Z",
+    "arrival": "2014-01-28T13:30:00Z",
+    "status": "ONTIME"
+}
+```
 
 Return *201 Created* on success or a *400 Bad request* on failure due to wrong input.
 
@@ -62,8 +64,8 @@ The response body is a *JSON* array of flight descriptors.
 
 #### Query parameters
 
-* **from**: filter by departure location. Example: *GET /flights?from=BCN*
-* **to**: filter by destination location. Example: *GET /flights?to=PARIS*, *GET /flights?from=BCN\&to=PARIS*
+* **from**: filter by departure location. Example: **GET** */flights?from=BCN*
+* **to**: filter by destination location. Example: **GET** */flights?to=PARIS*, **GET** */flights?from=BCN\&to=PARIS*
 
 ### Update flight status
 
