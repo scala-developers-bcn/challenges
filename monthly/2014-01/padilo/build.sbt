@@ -13,8 +13,7 @@ libraryDependencies ++= Seq(
   "io.argonaut" %% "argonaut" % "6.0.1" ,
   "io.argonaut" %% "argonaut-unfiltered" % "6.0",
   "com.github.nscala-time" %% "nscala-time" % "0.6.0",
-  "net.databinder" %% "unfiltered-spec" % "0.7.1" % "test",
-  "org.scalatest" %% "scalatest" % "1.9.1" % "test"
+  "net.databinder" %% "unfiltered-spec" % "0.7.1" % "test"
 )
 
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")

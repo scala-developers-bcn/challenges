@@ -99,7 +99,7 @@ class FlightPlan(flightStore: FlightStore = new FlightMemStore) extends unfilter
         }
       }
 
-      put | delete | post
+      put | post | delete
     }
   }
 }
