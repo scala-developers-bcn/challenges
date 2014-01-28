@@ -32,7 +32,7 @@ trait FlightStore {
     store("1", Flight(DateTime.now.hour(9).minute(5).second(0), DateTime.now.hour(10).minute(0).second(0), "Barcelona", "Madrid", FlightStatus.OnTime))
     store("2", Flight(DateTime.now.hour(10).minute(20).second(0), DateTime.now.hour(11).minute(15).second(0), "Madrid", "Barcelona", FlightStatus.Delayed))
     store("3", Flight(DateTime.now.hour(16).minute(10).second(0), DateTime.now.hour(17).minute(0).second(0), "Zaragoza", "Coruña", FlightStatus.Cancelled))
-    store("4", Flight(DateTime.now.hour(0).minute(20).second(0), DateTime.now.hour(12).minute(10).second(0), "Coruña", "Madrid", FlightStatus.OnTime))
+    store("4", Flight(DateTime.now.hour(0).minute(20).second(0), DateTime.now.hour(12).minute(10).second(0), "Sydney", "Los Angeles", FlightStatus.OnTime))
     store("5", Flight(DateTime.now.hour(12).minute(30).second(0), DateTime.now.hour(13).minute(45).second(0), "Barcelona", "Zaragoza", FlightStatus.OnTime))
   }
 }
@@ -74,7 +74,7 @@ class FlightMemStore extends FlightStore {
     listFilter(None, None)
   }
 
-  def listFilter(toFilter: Option[String], fromFilter: Option[String]): List[(String, Flight)] = {
+  def listFilter(toFilter: Option[String]=None, fromFilter: Option[String]=None): List[(String, Flight)] = {
     def filterFunc(option: Option[String]) = option match {
       case Some(att) => {
         (flightAtt: String) =>
