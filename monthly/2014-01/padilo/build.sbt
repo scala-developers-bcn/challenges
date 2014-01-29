@@ -16,6 +16,8 @@ libraryDependencies ++= Seq(
   "net.databinder" %% "unfiltered-spec" % "0.7.1" % "test"
 )
 
+scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
+
 resolvers ++= Seq(
   "java m2" at "http://download.java.net/maven/2",
   "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/release"  

@@ -5,7 +5,6 @@ import unfiltered.response._
 import unfiltered.directives._
 import unfiltered.directives.Directives._
 import net.pdiaz.flyapp.stores.FlightMemStore
-import dispatch.classic._
 import net.pdiaz.flyapp.stores.{ Flight, FlightStore, DataAlreadyExists, StoreDone, DataNotFound, ModifyDone }
 import argonaut.integrate.unfiltered._
 import argonaut._
@@ -13,17 +12,19 @@ import Argonaut._
 import scalaz._
 import Scalaz._
 import com.github.nscala_time.time.Imports._
+import scala.language.implicitConversions
 
 //** unfiltered plan */
-class FlightPlan(flightStore: FlightStore = FlightMemStore) extends unfiltered.filter.Plan {
+class FlightPlan(flightStore: FlightStore = new FlightMemStore) extends unfiltered.filter.Plan {
+  
+  flightStore.putDefaultData()
 
-  // it's simple to define your own directives
   def ensureContentType(tpe: String) =
     when { case RequestContentType(`tpe`) => } orElse UnsupportedMediaType
 
   def ensureJSONContentType = ensureContentType("application/json")
 
-  def intent = Path.Intent {
+  def intent = Directive.Intent.Path {
     case Seg(List("flights")) => {
       def get = for {
         _ <- GET
@@ -98,7 +99,7 @@ class FlightPlan(flightStore: FlightStore = FlightMemStore) extends unfiltered.f
         }
       }
 
-      put | delete | post
+      put | post | delete
     }
   }
 }
