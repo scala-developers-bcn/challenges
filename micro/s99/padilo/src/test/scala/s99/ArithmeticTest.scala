@@ -37,4 +37,14 @@ class ArithmeticTest extends FlatSpec with ShouldMatchers {
     P32.gcd(3300, 33) should be(33)
   }
 
+  "P33 35.isCoprimeTo(64)" should "be true" in {
+    35.isCoprimeTo(64) should be(true)
+  }
+
+  "P33 36.isCoprimeTo(63)" should "be false" in {
+    35.isCoprimeTo(64) should be(true)
+  }
+
+  
+
 }
