@@ -5,7 +5,7 @@ import org.scalatest.FlatSpec
 import scala.language.implicitConversions
 
 class ArithmeticTest extends FlatSpec with ShouldMatchers {
-  "P33.isPrime" should "return true on 7" in {
+  "P31.isPrime" should "return true on 7" in {
     7.isPrime should be(true)
   }
 
@@ -21,8 +21,20 @@ class ArithmeticTest extends FlatSpec with ShouldMatchers {
     0.isPrime should be(false)
   }
 
-    it should "return true on -2" in {
+  it should "return true on -2" in {
     -2.isPrime should be(true)
+  }
+
+  "P32.gcd" should "return 9 on (36, 63)" in {
+    P32.gcd(36, 63) should be(9)
+  }
+
+  it should "return 9 on (63, 36)" in {
+    P32.gcd(63, 36) should be(9)
+  }
+
+  it should "return 33 on (3300, 33)" in {
+    P32.gcd(3300, 33) should be(33)
   }
 
 }
