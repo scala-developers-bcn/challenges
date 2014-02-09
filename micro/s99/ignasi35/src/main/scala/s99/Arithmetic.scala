@@ -10,6 +10,9 @@ object Arithmetic {
       }.length == 0
     }
 
+    def isCoprimeTo(j:Int):Boolean ={
+      gcd(i,j)==1
+    }
 
   }
 
