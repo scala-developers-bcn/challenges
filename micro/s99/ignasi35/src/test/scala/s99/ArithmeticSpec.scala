@@ -22,17 +22,4 @@ class ArithmeticSuite extends FunSuite {
     assert(35.isCoprimeTo(64) == true)
   }
 
-  /*
-
-
-scala> 7.isPrime
-res0: Boolean = true
-
-res0: Int = 9
-P33 (*) Determine whether two positive integer numbers are coprime.
-Two numbers are coprime if their greatest common divisor equals 1.
-scala> 35.isCoprimeTo(64)
-res0: Boolean = true
-
-   */
 }
