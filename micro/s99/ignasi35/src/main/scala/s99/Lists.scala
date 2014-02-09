@@ -137,4 +137,7 @@ object Lists {
     scala.util.Random.shuffle(xs).take(num)
   }
 
+  def lotto(count: Int, max: Int): List[Int] = randomSelect(count, range(1, max))
+
+
 }

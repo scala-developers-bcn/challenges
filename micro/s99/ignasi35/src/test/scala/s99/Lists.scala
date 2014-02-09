@@ -136,14 +136,17 @@ class ListsSpec extends FlatSpec with ShouldMatchers {
     }
   }
 
+  it should "Lotto: Draw N different random numbers from the set 1..M." in{
+    val count = 6
+    val max = 49
+    val res = lotto(count, max)
+    res.length should be(count)
+    res.foreach{_ should be <= max}
+  }
+
+
   /*
 
-Hint: Use the solution to problem P20
-
-P24 (*) Lotto: Draw N different random numbers from the set 1..M.
-Example:
-scala> lotto(6, 49)
-res0: List[Int] = List(23, 1, 17, 33, 21, 37)
 P25 (*) Generate a random permutation of the elements of a list.
 Hint: Use the solution of problem P23.
 Example:
