@@ -14,15 +14,15 @@ class ArithmeticSuite extends FunSuite {
     assert{ 7.isPrime  == true}
   }
 
+  test("s99 can determine the greatest common divisor of two positive integer numbers. Using Euclid alg."){
+    assert(gcd(36, 63)==9)
+  }
   /*
 
 
 scala> 7.isPrime
 res0: Boolean = true
 
-P32 (**) Determine the greatest common divisor of two positive integer numbers.
-Use Euclid's algorithm.
-scala> gcd(36, 63)
 res0: Int = 9
 P33 (*) Determine whether two positive integer numbers are coprime.
 Two numbers are coprime if their greatest common divisor equals 1.
