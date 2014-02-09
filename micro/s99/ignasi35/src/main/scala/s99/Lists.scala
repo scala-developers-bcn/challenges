@@ -125,4 +125,16 @@ object Lists {
     front ++ (newItem :: back)
   }
 
+  def range(start: Int, end: Int): List[Int] = {
+    def range0(start: Int, end: Int, xs: List[Int]): List[Int] = {
+      if (start == end) start :: xs
+      else range0(start, end - 1, end :: xs)
+    }
+    range0(start, end, Nil)
+  }
+
+  def randomSelect[T](num: Int, xs: List[T]): List[T] = {
+    scala.util.Random.shuffle(xs).take(num)
+  }
+
 }

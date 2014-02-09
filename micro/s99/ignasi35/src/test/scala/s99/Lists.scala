@@ -119,19 +119,25 @@ class ListsSpec extends FlatSpec with ShouldMatchers {
 
   }
 
-  it should "Insert an element at a given position into a list." in{
+  it should "Insert an element at a given position into a list." in {
     insertAt('new, 1, List('a, 'b, 'c, 'd)) should be(List('a, 'new, 'b, 'c, 'd))
   }
 
+  it should "Create a list containing all integers within a given range." in {
+    range(4, 9) should be(List(4, 5, 6, 7, 8, 9))
+  }
+
+  it should "Extract a given number of randomly selected elements from a list." in {
+    val in = List('a, 'b, 'c, 'd, 'f, 'g, 'h)
+    val res = randomSelect(3, in)
+    res.length should be(3)
+    in.foreach{
+      in should contain(_)
+    }
+  }
+
   /*
-P22 (*) Create a list containing all integers within a given range.
-Example:
-scala> range(4, 9)
-res0: List[Int] = List(4, 5, 6, 7, 8, 9)
-P23 (**) Extract a given number of randomly selected elements from a list.
-Example:
-scala> randomSelect(3, List('a, 'b, 'c, 'd, 'f, 'g, 'h))
-res0: List[Symbol] = List('e, 'd, 'a)
+
 Hint: Use the solution to problem P20
 
 P24 (*) Lotto: Draw N different random numbers from the set 1..M.
