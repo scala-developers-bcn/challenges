@@ -119,13 +119,11 @@ class ListsSpec extends FlatSpec with ShouldMatchers {
 
   }
 
+  it should "Insert an element at a given position into a list." in{
+    insertAt('new, 1, List('a, 'b, 'c, 'd)) should be(List('a, 'new, 'b, 'c, 'd))
+  }
 
   /*
-
-  P21 (*) Insert an element at a given position into a list.
-Example:
-scala> insertAt('new, 1, List('a, 'b, 'c, 'd))
-res0: List[Symbol] = List('a, 'new, 'b, 'c, 'd)
 P22 (*) Create a list containing all integers within a given range.
 Example:
 scala> range(4, 9)

@@ -120,5 +120,9 @@ object Lists {
     (front ++ back.tail, back.head)
   }
 
+  def insertAt[T](newItem: T, index: Int, xs: List[T]): List[T] = {
+    val (front, back) = split(index, xs)
+    front ++ (newItem :: back)
+  }
 
 }
