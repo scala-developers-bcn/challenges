@@ -69,4 +69,7 @@ class ArithmeticTest extends FlatSpec with ShouldMatchers {
     1.primerFactors should be(Nil)
   }
 
+  "315.primeFactorMultiplicity" should "be List((3,2), (5,1), (7,1))" in {
+    315.primeFactorMultiplicity should be(List((3,2), (5,1), (7,1)))
+  }
 }

@@ -8,4 +8,6 @@ package object s99 {
   implicit def intToEulerTotient(i: Int) = new EulerTotientInt(i)
 
   implicit def intToPrimeFactor(i: Int) = new PrimerFactorInt(i)
+  
+  implicit def intToPrimeFactorMultiplicity(i:Int) = new PrimeFactorMultiplicity(i)
 }
