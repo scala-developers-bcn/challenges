@@ -15,7 +15,7 @@ class PrimerFactorInt(n: Int) {
     unOrderedPrimeFactors.sortWith(_ < _)
   }
 
-  private def unOrderedPrimeFactors = {
+  def unOrderedPrimeFactors = {
     def rPrimerFactors(n: Int, l: List[Int]): List[Int] = {
       if (n == 1) {
         l
