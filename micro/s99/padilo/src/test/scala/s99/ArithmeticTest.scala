@@ -45,6 +45,16 @@ class ArithmeticTest extends FlatSpec with ShouldMatchers {
     35.isCoprimeTo(64) should be(true)
   }
 
-  
+  "P34 10.totient" should "be 4" in {
+    10.totient should be(4)
+  }
+
+  "P34 1.totient" should "be 1" in {
+    1.totient should be(1)
+  }
+
+  "P34 0.totient" should "be 0" in {
+    0.totient should be(0)
+  }
 
 }
