@@ -57,4 +57,16 @@ class ArithmeticTest extends FlatSpec with ShouldMatchers {
     0.totient should be(0)
   }
 
+  "P35 315.primeFactors" should "be List(3, 3, 5, 7)" in {
+    315.primerFactors should be(List(3, 3, 5, 7))
+  }
+
+  "P35 2.primeFactors" should "be List(2)" in {
+    2.primerFactors should be(List(2))
+  }
+
+  "P35 1.primeFactors" should "be Nil" in {
+    1.primerFactors should be(Nil)
+  }
+
 }
