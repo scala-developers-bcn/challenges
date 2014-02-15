@@ -45,6 +45,31 @@ class ArithmeticTest extends FlatSpec with ShouldMatchers {
     35.isCoprimeTo(64) should be(true)
   }
 
-  
+  "P34 10.totient" should "be 4" in {
+    10.totient should be(4)
+  }
 
+  "P34 1.totient" should "be 1" in {
+    1.totient should be(1)
+  }
+
+  "P34 0.totient" should "be 0" in {
+    0.totient should be(0)
+  }
+
+  "P35 315.primeFactors" should "be List(3, 3, 5, 7)" in {
+    315.primerFactors should be(List(3, 3, 5, 7))
+  }
+
+  "P35 2.primeFactors" should "be List(2)" in {
+    2.primerFactors should be(List(2))
+  }
+
+  "P35 1.primeFactors" should "be Nil" in {
+    1.primerFactors should be(Nil)
+  }
+
+  "315.primeFactorMultiplicity" should "be List((3,2), (5,1), (7,1))" in {
+    315.primeFactorMultiplicity should be(List((3,2), (5,1), (7,1)))
+  }
 }
