@@ -1,0 +1,16 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           controllers.Application.index
+
+# FlyApp routes
+GET	/flights/to/:airportId		    controllers.Application.showTo(airportId: Long)
+GET /flights/from/:airportId        controllers.Application.showFrom(airportId : Long)
+POST /flights                       controllers.Application.create
+PUT /flights/:flyId                 controllers.Application.updateStatus(flyId : Long)
+DELETE /flights/:flyId              controllers.Application.delete(flyId: Long)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
