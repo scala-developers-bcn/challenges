@@ -2,8 +2,13 @@ package com.finnerjones.s99
 
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
-import com.finnerjones.s99.ListUitls._
+import com.finnerjones.s99.ListUtils._
 
+/*
+ * The S-99 scala katas are here:
+ * http://aperiodic.net/phil/scala/s-99/
+ * 
+ */
 class SomeListFlatSpecs extends FlatSpec with Matchers  {
 
 	// P01 on S99
@@ -46,6 +51,39 @@ class SomeListFlatSpecs extends FlatSpec with Matchers  {
 	  nth(2, l) should be ("fox")
 	}
 	
+	// P04 on S-99
+	"length(List(3,4,5,6,2,7))" should "return (6)" in {
+	  val l = List(3,4,5,6,2,7)
+	  lngth(l) should be (6)
+	}
 	
+	"length(List(sixty, five, days, of, static))" should "return (5)" in {
+	  val l = List("sixty","five","days","of","static")
+	  lngth(l) should be (5)
+	}
+	
+	"lengthTailRecursive(List(sixty, five, days, of, static))" should "return (5)" in {
+	  val l = List("sixty","five","days","of","static")
+	  lengthTailRecursive(l) should be (5)
+	}
+	
+	
+	// P05
+	"reverse(List(1,2,3,4))" should "return List(4,3,2,1)" in {
+	  val l = List(1,2,3,4)
+	  reverse(l) should be (List(4,3,2,1))
+	}
+	
+	"reverse(List(sixty five days of static))" should "return List(static, of, days, five, sixty)" in {
+	  val l = List("sixty","five","days","of","static")
+	  reverse(l) should be (List("static","of","days","five","sixty"))
+	}
+	
+	
+	// P06
+	"isPalindrome(List(1,2,3,2,1))" should "return (true)" in {
+	  val l = List(1,2,3,2,1)
+	  isPalindrome(l) should be (true)
+	}
 	
 }
