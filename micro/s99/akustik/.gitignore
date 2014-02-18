@@ -19,3 +19,6 @@ project/plugins/project/
 
 #Vim specific
 *.swp
+
+#Sublime specific
+*.sublime-project
