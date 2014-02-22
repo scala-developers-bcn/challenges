@@ -42,4 +42,70 @@ object ListUtils {
   // P06
   def isPalindrome[A](ls:List[A]): Boolean =  
     ls == ls.reverse
+
+
+  // P07 
+  def flatten(l:List[Any]):List[Any] = l flatMap {
+    case ls: List[_] => flatten(ls)
+    case e => List(e)
+  }
+
+  // P08
+  def compressRecursive(l:List[Any]):List[Any] = l match {
+    case Nil => Nil
+    case h :: tail => h::compressRecursive(tail.dropWhile(_ == h))
+  } 
+  
+  def compressTailRecursive[A](l:List[A]):List[A] = {
+    def compressR(result:List[A], curList:List[A]):List[A] = curList match {
+      case h::tail => compressR(h::result,tail.dropWhile(_ == h))
+      case Nil => result.reverse
+    }
+    compressR(Nil,l)
+    
+  }
+  
+  
+  def compressFunctional[A](l:List[A]):List[A] = 
+    l.foldRight(List[A]())  { (head,rest) =>
+    	if (rest.isEmpty || rest.head != head) head::rest
+    	else rest
+  	}
+  
+  
+  // P09 - my very own solution !!!!
+  def pack(l:List[Any]): List[List[Any]] = l match {
+    case Nil => Nil
+    case h::tail => l.takeWhile(_ == l.head) :: pack(l dropWhile(_ == l.head))
+  }
+  
+  // P09 - this solution is from the website
+  def pack2[A](l:List[A]): List[List[A]] = {
+    if (l.isEmpty) List(List())
+    else { 
+      /*
+       * example using span
+       * val l = List(1,1,1,1,2, 2, 2, 2, 2, 3, 3, 3, 3, 2, 2, 4, 4, 4, 4)
+       * l span {_ == l.head}
+       * res13: (List[Int], List[Int]) = 
+       * (List(1, 1, 1, 1),List(2, 2, 2, 2, 2, 3, 3, 3, 3, 2, 2, 4, 4, 4, 4))
+       * (   packed       ,     next      )
+       */     
+      val (packed, next) = l span { _ == l.head }
+      if (next == Nil) List(packed)
+      else packed::pack2(next)
+    }
+  }
+  
+  // P10
+  def encode(l:List[Any]):List[(Int, Any)] = {
+    val c = pack(l)
+    
+    def enc(l:List[List[Any]]):List[(Int,Any)] = l match {
+      case Nil => Nil
+      case h::tail => (h.length,h.head) :: enc(tail)
+    }
+    enc(c)
+  }
+  
 }

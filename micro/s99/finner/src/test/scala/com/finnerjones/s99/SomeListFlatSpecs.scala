@@ -86,4 +86,36 @@ class SomeListFlatSpecs extends FlatSpec with Matchers  {
 	  isPalindrome(l) should be (true)
 	}
 	
+	
+	// P07
+	"flatten(List(List(1,1),2,List(3, List(5,8)))" should "return List(1,1,2,3,5,8)" in {
+	  val l = List(List(1,1),2,List(3, List(5,8)))
+	  flatten(l) should be (List(1,1,2,3,5,8))
+	}
+	
+	
+	// P08
+	"compress(List('a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 'e', 'e'))" should 
+	"return List('a', 'b', 'c', 'a', 'd', 'e')" in {
+	  val l = List('a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 'e', 'e')
+	  compressRecursive(l) should be (List('a', 'b', 'c', 'a', 'd', 'e'))
+	  compressTailRecursive(l) should be (List('a', 'b', 'c', 'a', 'd', 'e'))
+	  compressFunctional(l) should be (List('a', 'b', 'c', 'a', 'd', 'e'))
+	}
+	
+	
+	// P09
+	"pack(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))" should 
+	"return List(List('a, 'a, 'a, 'a), List('b), List('c, 'c), List('a, 'a), List('d), List('e, 'e, 'e, 'e))" in {
+	  val l = List('a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 'e', 'e')
+	  pack(l) should be (List(List('a', 'a', 'a', 'a'), List('b'), List('c', 'c'), List('a', 'a'), List('d'), List('e', 'e', 'e', 'e')))
+	  pack2(l) should be (List(List('a', 'a', 'a', 'a'), List('b'), List('c', 'c'), List('a', 'a'), List('d'), List('e', 'e', 'e', 'e')))
+	}
+	
+	// P10
+	"encode(List('a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 'e', 'e'))" should
+	"return List((4,'a'), (1,'b'), (2,'c'), (2,'a'), (1,'d'), (4,'e'))" in {
+	  val l = List('a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 'e', 'e')
+	  encode(l) should be (List((4,'a'), (1,'b'), (2,'c'), (2,'a'), (1,'d'), (4,'e')))
+	}
 }
