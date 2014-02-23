@@ -12,6 +12,10 @@ project/plugins/project/
 # Scala-IDE specific
 .scala_dependencies
 
+# Sublime
+*.sublime-project
+*.sublime-workspace
+
 .settings
 .classpath
 .project
@@ -29,5 +33,7 @@ dist
 .target
 
 #Vim specific
-
 *.swp
+
+#Mongodb
+data/
