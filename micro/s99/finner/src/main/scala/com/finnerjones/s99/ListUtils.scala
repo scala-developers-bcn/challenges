@@ -97,7 +97,7 @@ object ListUtils {
     }
   }
   
-  // P10
+  // P10 - my very own solution !!
   def encode(l:List[Any]):List[(Int, Any)] = {
     val c = pack(l)
     
@@ -108,4 +108,8 @@ object ListUtils {
     enc(c)
   }
   
+  // P10 - solution from website
+  def encode2[A](l:List[A]):List[(Int,A)] = {
+    pack2(l) map { elem => (elem.length, elem.head)}
+  }
 }
