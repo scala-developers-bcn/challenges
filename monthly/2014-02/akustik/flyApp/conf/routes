@@ -2,12 +2,6 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
-GET     /                           controllers.Application.index
-
-# Hello action
-GET     /hello                      controllers.Application.sayHello
-
 # FlyApp routes
 POST	/flight/new		            @controllers.Flights.create()
 PUT     /flight/:id/status          @controllers.Flights.updateStatus(id: String)
@@ -20,6 +14,3 @@ GET     /flights/to/:id/:from/:to   @controllers.Flights.to(id: String, from: Lo
 GET     /flights/from/:id           @controllers.Flights.from(id: String, from: Long = 0, to: Long = 0)
 GET     /flights/from/:id/:from     @controllers.Flights.from(id: String, from: Long, to: Long = 0)
 GET     /flights/from/:id/:from/:to @controllers.Flights.from(id: String, from: Long, to: Long)
-
-# Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)

@@ -26,7 +26,7 @@ class Flights(flightsRepo: FlightsRepository) extends Controller {
         validate(request.body).map {
           in =>
             {
-              try {
+              try {             
                 operate(in)
                 responseSuccess
               } catch {
@@ -89,5 +89,4 @@ class Flights(flightsRepo: FlightsRepository) extends Controller {
   def updateStatus(id: String) = validateAndExecute(_.validate[String], (status: String) => {
     flightsRepo.updateStatus(id, status)
   })
-
 }

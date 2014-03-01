@@ -10,24 +10,19 @@ import org.specs2.specification.Scope
 import org.specs2.execute.AsResult
 import play.api.GlobalSettings
 
-trait RecordingTestSettings extends Scope {
-  val flightRepo: RecordingFlightsRepository = new RecordingFlightsRepository
-  val settings: Option[GlobalSettings] = Some(new TestSettings(flightRepo))
-}
-
 @RunWith(classOf[JUnitRunner])
 class FlightsSpec extends Specification with FlightData {
 
-  "Flights" should {
+  "Flights controller" should {
 
-    "send 404 on a bad request" in new RecordingTestSettings {
-      running(FakeApplication(withGlobal = settings)) {
+    "send 404 on a bad request" in new TestEnv.RecordingScope {
+      running(recordingApp) {
         route(FakeRequest(GET, "/boum")) must beNone
       }
     }
 
-    "create a new flight" in new RecordingTestSettings {
-      running(FakeApplication(withGlobal = settings)) {
+    "create a new flight" in new TestEnv.RecordingScope {
+      running(recordingApp) {
 
         val newFlight1 = route(FakeRequest("POST", "/flight/new").withJsonBody(flight1)).get
 
@@ -50,8 +45,8 @@ class FlightsSpec extends Specification with FlightData {
       }
     }
 
-    "return an error when creating a flight with incomplete information" in new RecordingTestSettings {
-      running(FakeApplication(withGlobal = settings)) {
+    "return an error when creating a flight with incomplete information" in new TestEnv.RecordingScope {
+      running(recordingApp) {
         val newIncompleteFlight = route(FakeRequest("POST", "/flight/new").withJsonBody(incompleteFlight)).get
 
         status(newIncompleteFlight) must equalTo(BAD_REQUEST)
@@ -66,8 +61,8 @@ class FlightsSpec extends Specification with FlightData {
       }
     }
 
-    "return an empty list of flights to somewhere" in new RecordingTestSettings {
-      running(FakeApplication(withGlobal = settings)) {
+    "return an empty list of flights to somewhere" in new TestEnv.RecordingScope {
+      running(recordingApp) {
         val flightsTo = route(FakeRequest(GET, "/flights/to/somewhere")).get
 
         status(flightsTo) must equalTo(OK)
@@ -86,8 +81,8 @@ class FlightsSpec extends Specification with FlightData {
       }
     }
 
-    "return an empty list of flights to somewhere with an arrival equal or after a timestamp" in new RecordingTestSettings {
-      running(FakeApplication(withGlobal = settings)) {
+    "return an empty list of flights to somewhere with an arrival equal or after a timestamp" in new TestEnv.RecordingScope {
+      running(recordingApp) {
         val flightsTo = route(FakeRequest(GET, "/flights/to/a/123")).get
         status(flightsTo) must equalTo(OK)
         contentType(flightsTo) must beSome.which(_ == "application/json")

@@ -1,11 +1,11 @@
 import play.api.GlobalSettings
 import play.api.Logger
 import controllers.Flights
-import repositories.InMemoryFlightsRepository
+import repositories._
 
 object DefaultSettings extends GlobalSettings {
 
-  val flightsRepo = new InMemoryFlightsRepository
+  val flightsRepo = new MongoDBFlightsRepository
 
   val flightsController = new Flights(flightsRepo)
 

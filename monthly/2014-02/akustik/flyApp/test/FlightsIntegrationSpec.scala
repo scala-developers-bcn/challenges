@@ -1,18 +1,21 @@
 import org.specs2.mutable._
 import org.specs2.runner._
 import org.junit.runner._
-
 import play.api.test._
 import play.api.test.Helpers._
-
 import play.api.libs.json._
+import repositories.FlightsRepository
+import org.specs2.specification.Scope
+import org.specs2.execute.AsResult
+import play.api.GlobalSettings
+import repositories.InMemoryFlightsRepository
 
 @RunWith(classOf[JUnitRunner])
 class FlightsIntegrationSpec extends Specification with FlightData {
 
-  "Flights" should {
-    "show the flights that have been created with an specific destination" in {
-      running(FakeApplication()) {
+  "Flights controller" should {
+    "show the flights that have been created with an specific destination" in new TestEnv.InMemoryScope {
+      running(inMemoryApp) {
 
         val newFlight1 = route(FakeRequest("POST", "/flight/new").withJsonBody(flight1)).get
 
@@ -32,8 +35,8 @@ class FlightsIntegrationSpec extends Specification with FlightData {
       }
     }
    
-    "be able to update the status of an existing flight" in {
-      running(FakeApplication()) {
+    "be able to update the status of an existing flight" in new TestEnv.InMemoryScope {
+      running(inMemoryApp) {
 
         val newFlight1 = route(FakeRequest("POST", "/flight/new").withJsonBody(flight1)).get
 
