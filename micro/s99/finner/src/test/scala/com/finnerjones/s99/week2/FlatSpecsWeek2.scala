@@ -69,5 +69,58 @@ class FlatSpecsWeek2 extends FlatSpec with Matchers {
     encodeD3(l) should be (List((4,'a'), (1,'b'), (2,'c'), (2,'a'), (1,'d'), (4,'e')))
   }
   
+  // P14 - my solution 
+  "duplicate(List('a', 'b', 'c', 'c', 'd'))" should 
+  "return List('a', 'a', 'b', 'b', 'c', 'c', 'c', 'c', 'd', 'd')" in {
+    val l = List('a', 'b', 'c', 'c', 'd')
+    duplicate(l) should be (List('a', 'a', 'b', 'b', 'c', 'c', 'c', 'c', 'd', 'd'))
+  }
+  
+  // P15 
+  "duplicateN(3, List('a', 'b', 'c', 'c', 'd'))" should
+  "return List('a', 'a', 'a', 'b', 'b', 'b', 'c', 'c', 'c', 'c', 'c', 'c', 'd', 'd', 'd')" in {
+    val l = List('a', 'b', 'c', 'c', 'd')
+    duplicateN(3,l) should be (List('a', 'a', 'a', 'b', 'b', 'b', 'c', 'c', 'c', 'c', 'c', 'c', 'd', 'd', 'd'))
+  }
+  
+  // P15 from website
+  "duplicate2N(3, List('a', 'b', 'c', 'c', 'd'))" should
+  "return List('a', 'a', 'a', 'b', 'b', 'b', 'c', 'c', 'c', 'c', 'c', 'c', 'd', 'd', 'd')" in {
+    val l = List('a', 'b', 'c', 'c', 'd')
+    duplicate2N(3,l) should be (List('a', 'a', 'a', 'b', 'b', 'b', 'c', 'c', 'c', 'c', 'c', 'c', 'd', 'd', 'd'))
+  }
+ 
+  
+  // P16 - my solution
+  "drop(3, List('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'))" should
+  "return List('a', 'b', 'd', 'e', 'g', 'h', 'j', 'k')" in {
+    val l = List('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k')
+    drop(3,l) should be (List('a', 'b', 'd', 'e', 'g', 'h', 'j', 'k'))
+    
+  }
+  
+  // P16 - web solution recursive
+  "dropRecursive(3, List('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'))" should
+  "return List('a', 'b', 'd', 'e', 'g', 'h', 'j', 'k')" in {
+    val l = List('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k')
+    dropRecursive(3,l) should be (List('a', 'b', 'd', 'e', 'g', 'h', 'j', 'k'))
+    
+  }
+
+  
+   // P16 - web solution tail recursive
+  "dropTailRecursive(3, List('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'))" should
+  "return List('a', 'b', 'd', 'e', 'g', 'h', 'j', 'k')" in {
+    val l = List('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k')
+    dropTailRecursive(3,l) should be (List('a', 'b', 'd', 'e', 'g', 'h', 'j', 'k'))
+  }
+ 
+   // P16 - web solution functional
+  "dropFunctional(3, List('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'))" should
+  "return List('a', 'b', 'd', 'e', 'g', 'h', 'j', 'k')" in {
+    val l = List('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k')
+    dropFunctional(3,l) should be (List('a', 'b', 'd', 'e', 'g', 'h', 'j', 'k'))
+  }
+
   
 }

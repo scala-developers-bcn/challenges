@@ -70,4 +70,50 @@ object S99SolutionsWeek2 {
       List( (ls.length, ls.head)) ::: encodeD3(l dropWhile(_ == l.head))
     }
   }
+  
+  //P14  - my solution 
+  def duplicate[A](l:List[A]):List[A] =
+    l flatMap (elem => List(elem,elem))
+  
+  
+  // P15 - my solution
+  def duplicateN[A](n:Int, l:List[A]): List[A] =
+    l flatMap (elem => List.fill(n)(elem))
+  
+  // P15 from website
+  def duplicate2N[A](n:Int, l:List[A]):List[A] =
+    l flatMap { List.make(n, _) }
+  
+  
+  // P16 - my solution
+  def drop[A](n:Int,l:List[A]):List[A] = 
+    l filter (e => (l.indexOf(e)+1) % 3 != 0)
+
+
+  // P16 - web solution 1
+  def dropRecursive[A](n:Int, l:List[A]):List[A] = {
+    def dropR(c:Int, curList:List[A]) : List[A] = (c,curList) match {
+      case (_, Nil) => Nil
+      case (1, _::tail) => dropR(n,tail)
+      case (_, h::tail) => h :: dropR(c- 1, tail)
+    }
+    dropR(n,l)
+    
+  }
+
+  // P16 - web solution 2
+  def dropTailRecursive[A](n:Int, l:List[A]):List[A] = {
+    def dropR(c:Int, curList:List[A], result:List[A]):List[A] = (c,curList) match {
+      case (_, Nil) => result.reverse
+      case (1, _::tail) => dropR(n,tail,result)
+      case (_, h::tail) => dropR(c - 1, tail, h::result)
+    }
+    dropR(n,l,Nil)
+  }
+
+  // P16 - web solution 3 (similar to mine)
+  def dropFunctional[A](n:Int, l:List[A]): List[A] =
+    l.zipWithIndex filter { v => (v._2 +1) % n != 0} map { _._1 }
+
+
 }
