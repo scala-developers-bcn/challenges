@@ -14,6 +14,7 @@ import reactivemongo.api.indexes._
 import scala.concurrent.duration.Duration
 import scala.concurrent.{ Future, Await }
 import reactivemongo.core.commands.Ascending
+import reactivemongo.core.commands.LastError
 
 /**
  * Check this out:
@@ -84,17 +85,20 @@ class MongoDBFlightsRepository extends FlightsRepository {
     flights.find(query).cursor[Flight].collect[List]()
   }
 
-  //TODO: Avoid using await and return directly futures with Action.async
+  //FIXME: Return a Future[Boolean]
   def updateStatus(id: String, status: String) = {
     val flightToUpdate = flights.find(Json.obj("id" -> id)).cursor[JsObject]
     val futureFlightsList = flightToUpdate.collect[List]()
     val statusUpdate = (__ \ "status").json.
       update(__.read[JsString].map { o => JsString(status) })
- 
-    Await.result(futureFlightsList, timeout).foreach(_.transform(statusUpdate) match {
-      case JsSuccess(updated, path) => Await.result(flights.save(updated), timeout)
-      case _ => Logger.error("Unable to update the flight with id ${id}")
+    val updates = futureFlightsList.flatMap(flightsToBeUpdated => {
+      val updateResults = flightsToBeUpdated.map(_.transform(statusUpdate)).map(_ match {
+        case JsSuccess(updated, path) => flights.save(updated).map(_.ok)
+        case _ => Future{ false }
+      })
+       Future.sequence(updateResults)
     })
+    updates
   }
 
   def delete(id: String) = flights.remove(Json.obj("id" -> id)).map(_.ok)

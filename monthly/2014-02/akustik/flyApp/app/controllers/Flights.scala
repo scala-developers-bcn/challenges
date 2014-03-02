@@ -25,34 +25,6 @@ class Flights(flightsRepo: FlightsRepository) extends Controller {
   private val responseJsonError = BadRequest("json parse error")
   private val responseFlights = (flights: Iterable[Flight]) => Ok(Json.toJson(flights))
 
-  private def validateAndExecute[T](validate: (JsValue) => JsResult[T],
-    operate: (T) => Unit) = Action(parse.json) {
-    request =>
-      {
-        validate(request.body).map {
-          in =>
-            {
-              try {             
-                operate(in)
-                responseSuccess
-              } catch {
-                case e: Throwable => {
-                  Logger.error(e.toString())
-                  responseFailure
-                }
-              }
-
-            }
-        }.recoverTotal {
-          e =>
-            {
-              Logger.error(e.toString)
-              responseJsonError
-            }
-        }
-      }
-  }
-  
   private def validateAndExecuteAsync[T](validate: (JsValue) => JsResult[T],
     operate: (T) => Future[Boolean]) = Action.async(parse.json) {
     request =>
@@ -70,17 +42,6 @@ class Flights(flightsRepo: FlightsRepository) extends Controller {
             }
         }
       }
-  }
-
-  private def list(block: => Iterable[Flight]) = Action {
-    try {
-      responseFlights(block)
-    } catch {
-      case e: Throwable => {
-        Logger.error(e.toString())
-        responseFailure
-      }
-    }
   }
 
   def create() = validateAndExecuteAsync(_.validate[Flight], 
@@ -101,7 +62,7 @@ class Flights(flightsRepo: FlightsRepository) extends Controller {
   def delete(id: String) = validateAndExecuteAsync(_.validate[String],
     (body: String) => flightsRepo.delete(id))
 
-  def updateStatus(id: String) = validateAndExecute(_.validate[String], (status: String) => {
-    flightsRepo.updateStatus(id, status)
+  def updateStatus(id: String) = validateAndExecuteAsync(_.validate[String], (status: String) => {
+    flightsRepo.updateStatus(id, status).map(r => r.foldRight(true)((a, b) => a && b))
   })
 }
