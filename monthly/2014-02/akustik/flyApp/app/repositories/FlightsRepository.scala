@@ -11,8 +11,18 @@ trait FlightsRepository {
    */
   def insert(f: Flight): Future[Boolean]
   
-  def flightsTo(id: String, from: Long, to: Long): Iterable[Flight]
-  def flightsFrom(id: String, from: Long, to: Long): Iterable[Flight]
+  /** Finds flights that go to a given location
+   */
+  def flightsTo(id: String, from: Long, to: Long): Future[List[Flight]]
+  
+  /** A list of flights that come from a given location
+   */
+  def flightsFrom(id: String, from: Long, to: Long): Future[List[Flight]]
+  
+  /** Updates the status of a given flight
+   *  @param id A flight identifier, i.e. VL1234
+   *  @return A future boolean for success, false otherwise
+   */
   def updateStatus(id: String, status: String)
   
   /** Deletes flights with the given id

@@ -83,27 +83,19 @@ class Flights(flightsRepo: FlightsRepository) extends Controller {
     }
   }
 
-  private def execute(block: => Unit) = Action {
-    try {
-      block
-      responseSuccess
-    } catch {
-      case e: Throwable => {
-        Logger.error(e.toString())
-        responseFailure
-      }
-    }
-  }
-
   def create() = validateAndExecuteAsync(_.validate[Flight], 
     (f: Flight) => flightsRepo.insert(f))
 
-  def to(id: String, from: Long, to: Long) = list {
-    flightsRepo.flightsTo(id, from, to)
+  def to(id: String, from: Long, to: Long) = Action.async {
+    flightsRepo.flightsTo(id, from, to).flatMap(flights => Future { 
+      Ok(Json.toJson(flights))
+    })
   }
 
-  def from(id: String, from: Long, to: Long) = list {
-    flightsRepo.flightsFrom(id, from, to)
+  def from(id: String, from: Long, to: Long) = Action.async {
+    flightsRepo.flightsFrom(id, from, to).flatMap(flights => Future { 
+      Ok(Json.toJson(flights))
+    })
   }
 
   def delete(id: String) = validateAndExecuteAsync(_.validate[String],

@@ -48,8 +48,6 @@ class MongoDBFlightsRepository extends FlightsRepository {
   
   implicit val flightFormat = Json.format[Flight]
 
-  implicit val flightWithIdFormat = Json.format[FlightWithId]
-
   def insert(f: Flight) = flights.insert(f).map(_.ok)
 
   private def addFromClause(query: JsObject, from: Long) = {
@@ -76,18 +74,14 @@ class MongoDBFlightsRepository extends FlightsRepository {
     }
   }
   
-  def flightsTo(id: String, from: Long, to: Long): Iterable[Flight] = {
+  def flightsTo(id: String, from: Long, to: Long): Future[List[Flight]] = {
     val query = addToClause(addFromClause(Json.obj("to" -> id), from), to)
-    val cursor: Cursor[Flight] = flights.find(query).cursor[Flight]
-    val futureFlightsList: Future[List[Flight]] = cursor.collect[List]()
-    Await.result(futureFlightsList, timeout)
+    flights.find(query).cursor[Flight].collect[List]()
   }
 
-  def flightsFrom(id: String, from: Long, to: Long): Iterable[Flight] = {
+  def flightsFrom(id: String, from: Long, to: Long): Future[List[Flight]] = {
     val query = addToClause(addFromClause(Json.obj("from" -> id), from), to)
-    val cursor: Cursor[Flight] = flights.find(query).cursor[Flight]
-    val futureFlightsList: Future[List[Flight]] = cursor.collect[List]()
-    Await.result(futureFlightsList, timeout)
+    flights.find(query).cursor[Flight].collect[List]()
   }
 
   //TODO: Avoid using await and return directly futures with Action.async
@@ -96,7 +90,7 @@ class MongoDBFlightsRepository extends FlightsRepository {
     val futureFlightsList = flightToUpdate.collect[List]()
     val statusUpdate = (__ \ "status").json.
       update(__.read[JsString].map { o => JsString(status) })
-      
+ 
     Await.result(futureFlightsList, timeout).foreach(_.transform(statusUpdate) match {
       case JsSuccess(updated, path) => Await.result(flights.save(updated), timeout)
       case _ => Logger.error("Unable to update the flight with id ${id}")

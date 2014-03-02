@@ -11,7 +11,7 @@ object DefaultSettings extends GlobalSettings {
 
   val flightsRepo = new MongoDBFlightsRepository
   
-  //FIXME: How to ensure indexes
+  //FIXME: where to ensure indexes
   //Await.result(flightsRepo.ensureIndexes, timeout)
   
   val flightsController = new Flights(flightsRepo)

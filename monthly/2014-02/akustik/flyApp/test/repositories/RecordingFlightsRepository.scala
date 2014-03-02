@@ -26,12 +26,12 @@ class RecordingFlightsRepository extends FlightsRepository {
     true
   }
 
-  def flightsTo(id: String, from: Long, to: Long): Iterable[Flight] = {
+  def flightsTo(id: String, from: Long, to: Long): Future[List[Flight]] = Future {
     lastFlightsTo = Some((id, from, to))
     List()
   }
 
-  def flightsFrom(id: String, from: Long, to: Long): Iterable[Flight] = {
+  def flightsFrom(id: String, from: Long, to: Long): Future[List[Flight]] = Future {
     lastFlightsFrom = Some((id, from, to))
     List()
   }

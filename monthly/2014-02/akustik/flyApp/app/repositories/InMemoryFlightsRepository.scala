@@ -29,15 +29,19 @@ class InMemoryFlightsRepository extends FlightsRepository {
   private def filter(sel: (Flight) => String, ts: (Flight) => Long)(id: String, from: Long, to: Long) = {
     data.filter {
       case (flightId, flight) => sel(flight) == id && timestampInRange(ts(flight), from, to)
-    }.values
+    }.values.toList
   }
 
-  def flightsTo(id: String, from: Long, to: Long): Iterable[Flight] = {
-    filter(f => f.to, f => f.arrival)(id, from, to)
+  def flightsTo(id: String, from: Long, to: Long): Future[List[Flight]] = {
+    Future {
+      filter(f => f.to, f => f.arrival)(id, from, to)
+    }
   }
 
-  def flightsFrom(id: String, from: Long, to: Long): Iterable[Flight] = {
-    filter(f => f.from, f => f.arrival)(id, from, to)
+  def flightsFrom(id: String, from: Long, to: Long):  Future[List[Flight]] = {
+    Future {
+      filter(f => f.from, f => f.arrival)(id, from, to)
+    }
   }
 
   def updateStatus(id: String, status: String) = {
