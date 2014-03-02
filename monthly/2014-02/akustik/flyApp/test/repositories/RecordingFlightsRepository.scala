@@ -38,7 +38,7 @@ class RecordingFlightsRepository extends FlightsRepository {
 
   def updateStatus(id: String, status: String) = Future {
     lastStatusUpdated = Some((id, status))
-    List(true)
+    true
   }
 
   def delete(id: String) = Future {
