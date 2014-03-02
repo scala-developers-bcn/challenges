@@ -1,7 +1,10 @@
 package repositories
 
+import scala.concurrent.Future
+
 import model.Flight
 import play.api.Logger
+import play.api.libs.concurrent.Execution.Implicits.defaultContext
 
 class InMemoryFlightsRepository extends FlightsRepository {
   var data = scala.collection.mutable.Map[String, Flight]()
@@ -13,8 +16,14 @@ class InMemoryFlightsRepository extends FlightsRepository {
     case (a, b) => a <= t && t <= b
   }
 
-  def insert(f: Flight) = {
-    data.put(f.id, f).foreach(old => Logger.info("Removed previous flight: " + old))
+  def insert(f: Flight) = Future {
+    data.put(f.id, f) match {
+      case Some(oldFlight) => {
+        Logger.error("A flight already existed with this id: " + oldFlight)
+        false
+      }
+      case None => true
+    }
   }
 
   private def filter(sel: (Flight) => String, ts: (Flight) => Long)(id: String, from: Long, to: Long) = {
@@ -40,7 +49,8 @@ class InMemoryFlightsRepository extends FlightsRepository {
     }
   }
 
-  def delete(id: String) = {
+  def delete(id: String) = Future {
     data -= id
+    true
   }
 }

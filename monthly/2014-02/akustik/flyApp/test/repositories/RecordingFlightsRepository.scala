@@ -1,7 +1,9 @@
 package repositories
 
+import scala.concurrent.Future
+
 import model.Flight
-import play.api.Logger
+import play.api.libs.concurrent.Execution.Implicits.defaultContext
 
 class RecordingFlightsRepository extends FlightsRepository {
 
@@ -19,8 +21,9 @@ class RecordingFlightsRepository extends FlightsRepository {
     lastFlightsFrom = None
   }
   
-  def insert(f: Flight) = {
+  def insert(f: Flight) = Future {
     lastInserted = Some(f)
+    true
   }
 
   def flightsTo(id: String, from: Long, to: Long): Iterable[Flight] = {
@@ -37,7 +40,8 @@ class RecordingFlightsRepository extends FlightsRepository {
     lastStatusUpdated = Some((id, status))
   }
 
-  def delete(id: String) = {
+  def delete(id: String) = Future {
     lastDeleted = Some(id)
+    true
   }
 }

@@ -1,25 +1,26 @@
 package repositories
 
 import model.Flight
-
 import play.api.Logger
 import play.api.libs.json._
 import play.modules.reactivemongo._
 import play.modules.reactivemongo.json.collection.JSONCollection
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.Play.current
-
 import reactivemongo.api._
 import reactivemongo.bson._
-
+import reactivemongo.api.collections.default.BSONCollection
+import reactivemongo.api.indexes._
 import scala.concurrent.duration.Duration
 import scala.concurrent.{ Future, Await }
+import reactivemongo.core.commands.Ascending
 
 /**
  * Check this out:
  *   coast-to-coast: http://www.playframework.com/documentation/2.1.3/ScalaJsonTransformers
  *   reactive mongo for play: https://github.com/ReactiveMongo/Play-ReactiveMongo
  *   http://docs.mongodb.org/manual/tutorial/query-documents/
+ *   http://reactivemongo.org/releases/0.9/api/index.html#reactivemongo.api.package
  */
 class MongoDBFlightsRepository extends FlightsRepository {
 
@@ -28,14 +29,28 @@ class MongoDBFlightsRepository extends FlightsRepository {
   val timeout = Duration(1000, "millis")
 
   private def flights: JSONCollection = ReactiveMongoPlugin.db.collection[JSONCollection]("flights")
-
+  
+  def ensureIndexes: Future[Boolean] = {
+    ensureIndex(List(("id", IndexType.Ascending)), unique = true)
+  }
+ 
+  def ensureIndex(
+    key: List[(String, IndexType)],
+    name: Option[String] = None,
+    unique: Boolean = false,
+    background: Boolean = false,
+    dropDups: Boolean = false,
+    sparse: Boolean = false,
+    version: Option[Int] = None,
+    options: BSONDocument = BSONDocument()) = {
+    flights.indexesManager.ensure(Index(key, name, unique, background, dropDups, sparse, version, options))
+  }
+  
   implicit val flightFormat = Json.format[Flight]
 
   implicit val flightWithIdFormat = Json.format[FlightWithId]
 
-  def insert(f: Flight) = {
-    flights.insert(f).map(lastError => Logger.error("lastError = " + lastError))
-  }
+  def insert(f: Flight) = flights.insert(f).map(_.ok)
 
   private def addFromClause(query: JsObject, from: Long) = {
     if(from != 0) {
@@ -88,7 +103,5 @@ class MongoDBFlightsRepository extends FlightsRepository {
     })
   }
 
-  def delete(id: String) = {
-    Await.result(flights.remove(Json.obj("id" -> id)), timeout)
-  }
+  def delete(id: String) = flights.remove(Json.obj("id" -> id)).map(_.ok)
 }

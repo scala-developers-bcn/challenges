@@ -2,11 +2,18 @@ import play.api.GlobalSettings
 import play.api.Logger
 import controllers.Flights
 import repositories._
+import scala.concurrent.{ Future, Await }
+import scala.concurrent.duration.Duration
 
 object DefaultSettings extends GlobalSettings {
+  
+  val timeout = Duration(1000, "millis")
 
   val flightsRepo = new MongoDBFlightsRepository
-
+  
+  //FIXME: How to ensure indexes
+  //Await.result(flightsRepo.ensureIndexes, timeout)
+  
   val flightsController = new Flights(flightsRepo)
 
   val classOfFlights = classOf[Flights]
