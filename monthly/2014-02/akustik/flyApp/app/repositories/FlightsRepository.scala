@@ -23,7 +23,7 @@ trait FlightsRepository {
    *  @param id A flight identifier, i.e. VL1234
    *  @return A future boolean for success, false otherwise
    */
-  def updateStatus(id: String, status: String): Future[List[Boolean]]
+  def updateStatus(id: String, status: String): Future[Boolean]
   
   /** Deletes flights with the given id
    *  @param id A flight identifier, i.e. VL1234

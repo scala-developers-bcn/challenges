@@ -46,12 +46,10 @@ class InMemoryFlightsRepository extends FlightsRepository {
 
   def updateStatus(id: String, status: String) = {
     data.get(id) match {
-      case Some(f) => insert(Flight(f.id, f.from, f.to, f.arrival, f.departure, status)).flatMap(b => Future {
-        List(b)
-      })
+      case Some(f) => insert(Flight(f.id, f.from, f.to, f.arrival, f.departure, status))
       case None => Future {
         Logger.error(s"Flight with id ${id} not found")
-        List(false)
+        false
       }
     }
   }

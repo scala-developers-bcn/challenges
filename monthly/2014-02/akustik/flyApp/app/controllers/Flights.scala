@@ -63,6 +63,6 @@ class Flights(flightsRepo: FlightsRepository) extends Controller {
     (body: String) => flightsRepo.delete(id))
 
   def updateStatus(id: String) = validateAndExecuteAsync(_.validate[String], (status: String) => {
-    flightsRepo.updateStatus(id, status).map(r => r.foldRight(true)((a, b) => a && b))
+    flightsRepo.updateStatus(id, status)
   })
 }

@@ -85,7 +85,6 @@ class MongoDBFlightsRepository extends FlightsRepository {
     flights.find(query).cursor[Flight].collect[List]()
   }
 
-  //FIXME: Return a Future[Boolean]
   def updateStatus(id: String, status: String) = {
     val flightToUpdate = flights.find(Json.obj("id" -> id)).cursor[JsObject]
     val futureFlightsList = flightToUpdate.collect[List]()
@@ -98,7 +97,7 @@ class MongoDBFlightsRepository extends FlightsRepository {
       })
        Future.sequence(updateResults)
     })
-    updates
+    updates.map(r => r.foldRight(true)((a, b) => a && b))
   }
 
   def delete(id: String) = flights.remove(Json.obj("id" -> id)).map(_.ok)
