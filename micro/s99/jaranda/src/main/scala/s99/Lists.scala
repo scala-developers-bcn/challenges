@@ -2,14 +2,6 @@ package s99
 
 import scala.annotation.tailrec
 
-/**
- * Created with IntelliJ IDEA.
- * User: jaranda
- * Date: 05/01/14
- * Time: 09:47
- * To change this template use File | Settings | File Templates.
- */
-
 object Lists {
 
   /**

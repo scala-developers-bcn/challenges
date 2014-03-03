@@ -3,14 +3,6 @@ package s99
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FlatSpec
 
-/**
- * Created with IntelliJ IDEA.
- * User: jaranda
- * Date: 05/01/14
- * Time: 10:27
- * To change this template use File | Settings | File Templates.
- */
-
 class ListsSpec extends FlatSpec with ShouldMatchers {
 
   "Lists problems set" should "find the last element of a list" in {
