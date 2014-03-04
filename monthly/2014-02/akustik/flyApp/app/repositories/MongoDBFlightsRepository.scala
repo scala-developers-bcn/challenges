@@ -84,21 +84,28 @@ class MongoDBFlightsRepository extends FlightsRepository {
     val query = addToClause(addFromClause(Json.obj("from" -> id), from), to)
     flights.find(query).cursor[Flight].collect[List]()
   }
-
+  
   def updateStatus(id: String, status: String) = {
-    val flightToUpdate = flights.find(Json.obj("id" -> id)).cursor[JsObject]
-    val futureFlightsList = flightToUpdate.collect[List]()
-    val statusUpdate = (__ \ "status").json.
-      update(__.read[JsString].map { o => JsString(status) })
-    val updates = futureFlightsList.flatMap(flightsToBeUpdated => {
-      val updateResults = flightsToBeUpdated.map(_.transform(statusUpdate)).map(_ match {
-        case JsSuccess(updated, path) => flights.save(updated).map(_.ok)
-        case _ => Future{ false }
-      })
-       Future.sequence(updateResults)
-    })
-    updates.map(r => r.foldRight(true)((a, b) => a && b))
+    flights.update(Json.obj("id" -> id), 
+      Json.obj("$set" -> Json.obj("status" -> status)), 
+      multi = true).map(_.ok)
   }
+
+//  Old version: Getting n jsobjects and updating them.
+//  def updateStatus(id: String, status: String) = {
+//    val flightToUpdate = flights.find(Json.obj("id" -> id)).cursor[JsObject]
+//    val futureFlightsList = flightToUpdate.collect[List]()
+//    val statusUpdate = (__ \ "status").json.
+//      update(__.read[JsString].map { o => JsString(status) })
+//    val updates = futureFlightsList.flatMap(flightsToBeUpdated => {
+//      val updateResults = flightsToBeUpdated.map(_.transform(statusUpdate)).map(_ match {
+//        case JsSuccess(updated, path) => flights.save(updated).map(_.ok)
+//        case _ => Future{ false }
+//      })
+//       Future.sequence(updateResults)
+//    })
+//    updates.map(r => r.foldRight(true)((a, b) => a && b))
+//  }
 
   def delete(id: String) = flights.remove(Json.obj("id" -> id)).map(_.ok)
 }
