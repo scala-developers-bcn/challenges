@@ -15,15 +15,24 @@ import play.api.mvc.Action
 import play.api.mvc.Controller
 import repositories.FlightsRepository
 
+object Flights {
+  val jsonSuccess = Json.obj("result" -> "success")
+  val jsonFailure = Json.obj("result" -> "failure")
+  val jsonErrorMsg = "json parse error"
+  def jsonExecutionError(msg: String) = Json.obj("result" -> "failure", "detail" -> msg)
+}
+
 class Flights(flightsRepo: FlightsRepository) extends Controller {
 
   implicit val flightReads = Json.reads[Flight]
   implicit val flightWrites = Json.writes[Flight]
 
-  private val responseSuccess = Ok(Json.obj("result" -> "success"))
-  private val responseFailure = Ok(Json.obj("result" -> "failure"))
-  private val responseJsonError = BadRequest("json parse error")
-  private val responseFlights = (flights: Iterable[Flight]) => Ok(Json.toJson(flights))
+  private val responseSuccess = Ok(Flights.jsonSuccess)
+  private val responseFailure = Ok(Flights.jsonFailure)
+  private val responseJsonError = BadRequest(Flights.jsonErrorMsg)
+  private val responseFlights = (flights: Iterable[Flight]) => Future {
+    Ok(Json.toJson(flights))
+  }
 
   private def validateAndExecuteAsync[T](validate: (JsValue) => JsResult[T],
     operate: (T) => Future[Boolean]) = Action.async(parse.json) {
@@ -48,15 +57,11 @@ class Flights(flightsRepo: FlightsRepository) extends Controller {
     (f: Flight) => flightsRepo.insert(f))
 
   def to(id: String, from: Long, to: Long) = Action.async {
-    flightsRepo.flightsTo(id, from, to).flatMap(flights => Future { 
-      Ok(Json.toJson(flights))
-    })
+    flightsRepo.flightsTo(id, from, to).flatMap(responseFlights)
   }
 
   def from(id: String, from: Long, to: Long) = Action.async {
-    flightsRepo.flightsFrom(id, from, to).flatMap(flights => Future { 
-      Ok(Json.toJson(flights))
-    })
+    flightsRepo.flightsFrom(id, from, to).flatMap(responseFlights)
   }
 
   def delete(id: String) = validateAndExecuteAsync(_.validate[String],
