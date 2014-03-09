@@ -12,14 +12,28 @@ project/plugins/project/
 # Scala-IDE specific
 .scala_dependencies
 
+# Sublime
+*.sublime-project
+*.sublime-workspace
+
 .settings
 .classpath
 .project
 .cache
 
+# Play specific
+
+logs
+project/project
+project/target
+target
+tmp
+dist
+.cache
+.target
+
 #Vim specific
 *.swp
 
-#Sublime specific
-*.sublime-project
-*.sublime-workspace
+#Mongodb
+data/
