@@ -5,10 +5,10 @@ import scala.annotation.tailrec
 object Arithmetic {
   
   implicit def int2MyInt(i: Int) = new MyInt(i);
+  
+  val primes: Stream[Int] = 2 #:: 3 #:: 5 #:: 7 #:: 11 #:: 13 #:: Stream.from(17).filter(_.isPrime)
 	
   class MyInt(val i: Int) {
-    
-    val primes: Stream[Int] = 2 #:: 3 #:: 5 #:: 7 #:: 11 #:: 13 #:: Stream.from(17).filter(_.isPrime) 
   
     def isPrime: Boolean = {
 	  	(2 to math.sqrt(i).toInt).filter(n => i % n == 0).length == 0
@@ -20,6 +20,10 @@ object Arithmetic {
     
     def totient: Int = {
       (1 to i).filter(i.isCoprimeTo(_)).length
+    }
+    
+    def totientImproved : Int = {
+      i.primeFactorMultiplicity.map( n => (n._1 - 1) * math.pow((n._1),(n._2 - 1)) ).reduce( (n , m) => n * m).intValue();
     }
     
     def primeFactors: List[Int] = {
@@ -42,6 +46,10 @@ object Arithmetic {
   def gcd(a: Int, b: Int) : Int = (a,b) match {
     case (a, 0) => a
     case _ => gcd(b, a%b)
+  }
+  
+  def listPrimesInRange(r: Range) : List[Int] = {
+    primes.dropWhile(_ < r.head).takeWhile(_ <= r.last).toList
   }
   
 }
