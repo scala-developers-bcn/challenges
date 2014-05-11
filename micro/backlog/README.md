@@ -1,4 +1,4 @@
-### Contest 01
+### Contest 001
 
 A sha-256 is a [one way function](http://en.wikipedia.org/wiki/One-way_function) that may be stored into a database instead of the actual password of the user. If a malicious user obtains the database information, he/she still will need to use the hash function with every possible password and compare it to the stored hash to know the real one. 
 
