@@ -1,3 +1,9 @@
+## Instructions
+
+Use this README as a contest backlog (please, refactor it if you find it too long) and add any kind of problem that you think that may be interesting to work in. 
+
+If you want to share the solution for a contest, create a sbt project in the contest subfolder with your username so that all the different versions of the code can share the same repository.  
+
 ### Contest 001
 
 A sha-256 is a [one way function](http://en.wikipedia.org/wiki/One-way_function) that may be stored into a database instead of the actual password of the user. If a malicious user obtains the database information, he/she still will need to use the hash function with every possible password and compare it to the stored hash to know the real one. 
@@ -74,3 +80,6 @@ public class PasswordFinder {
 ```
 
 To avoid this risk, we want to run the dictionary attack with all the passwords stored in the database and send an alert to the users that have a weak one. As this can take quite long, we've agreed to rewrite the code to be more efficient. In scala, obviously.
+
+Best code gets a free pint in the next scala beers :D
+
