@@ -1,4 +1,4 @@
-package chriszen
+package chriszen.singlehash
 
 import javax.xml.bind.DatatypeConverter
 

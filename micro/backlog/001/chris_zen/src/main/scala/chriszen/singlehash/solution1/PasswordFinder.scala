@@ -1,8 +1,9 @@
-package chriszen.solution1
+package chriszen.singlehash.solution1
 
 import java.io.{InputStreamReader, BufferedReader, InputStream}
-import chriszen.Hash
 import java.security.MessageDigest
+import javax.xml.bind.DatatypeConverter
+import chriszen.singlehash.Hash
 
 /**
  * This is the simple solution that just calculates the hash for each dictionary key and compares with the target.
@@ -12,7 +13,7 @@ import java.security.MessageDigest
 class PasswordFinder {
 
   def findPassword(
-                    targetHash: Hash,
+                    targetHashString: String,
                     inputStream: InputStream,
                     charsetName: String = "UTF-8",
                     hashAlgorithm: String = "SHA-256"
@@ -21,6 +22,8 @@ class PasswordFinder {
     val bis = new BufferedReader(new InputStreamReader(inputStream, charsetName))
 
     var password: Option[String] = None
+
+    val targetHash = Hash.fromBase64(targetHashString)
 
     def check(key: String) = {
       //println(s"Checking $key ...")

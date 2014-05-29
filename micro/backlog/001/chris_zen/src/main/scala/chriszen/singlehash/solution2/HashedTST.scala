@@ -1,7 +1,7 @@
-package chriszen.solution2
+package chriszen.singlehash.solution2
 
 import java.security.MessageDigest
-import chriszen.Hash
+import chriszen.singlehash.Hash
 
 /**
  * Immutable hashed ternary search tree.
@@ -48,6 +48,9 @@ trait HashedTST {
     val (nextTree, foundHash) = put(s, 0, createDigest)
     (nextTree, foundHash.get)
   }
+
+  def get(key: String, index: Int): Option[Hash] = None
+  def get(key: String): Option[Hash] = None
 
   def createDigest = { MessageDigest.getInstance(HashedTST.Algorithm) }
 
@@ -98,6 +101,24 @@ class HashedTSTNode(
   override def put(s: String): (HashedTST, Hash) = {
     val (nextTree, foundHash) = put(s, 0, createDigest)
     (nextTree, foundHash.get)
+  }
+
+  override def get(s: String, index: Int): Option[Hash] = {
+    val currentChar = s.charAt(index)
+    if (currentChar < key)
+      left.get(s, index)
+    else if (currentChar > key)
+      right.get(s, index)
+    else {// if (currentChar == key)
+      if (index < s.length - 1)
+        get(s, index + 1)
+      else
+        hash
+    }
+  }
+
+  override def get(key: String): Option[Hash] = {
+    get(key, 0)
   }
 
   override def toStringHelper(sb: StringBuilder, margin: String) {

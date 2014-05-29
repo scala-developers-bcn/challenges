@@ -1,8 +1,8 @@
-package chriszen.solution2
+package chriszen.singlehash.solution2
 
 import java.io.{InputStreamReader, BufferedReader, InputStream}
 import scala.util.Random
-import chriszen.Hash
+import chriszen.singlehash.Hash
 
 /**
  * This solution uses a Ternary Search Tree to save the pre-calculated digests for all the substrings already found.
@@ -16,7 +16,7 @@ class PasswordFinder {
   //TODO HashedTST does not support defining the hash algorithm yet
 
   def findPassword(
-                  targetHash: Hash,
+                  targetHashString: String,
                   inputStream: InputStream,
                   charsetName: String = "UTF-8",
                   hashAlgorithm: String = "SHA-256"
@@ -27,6 +27,8 @@ class PasswordFinder {
     var password: Option[String] = None
 
     var tree = HashedTST.Empty
+
+    val targetHash = Hash.fromBase64(targetHashString)
 
     def check(key: String) = {
       //println(s"Putting $key ...")
@@ -57,7 +59,7 @@ class PasswordFinder {
   }
 
   def findPasswordWithRandomization(
-                                     targetHash: Hash,
+                                     targetHashString: String,
                                      inputStream: InputStream,
                                      charsetName: String = "UTF-8",
                                      hashAlgorithm: String = "SHA-256",
@@ -73,6 +75,8 @@ class PasswordFinder {
     var password: Option[String] = None
 
     var tree = HashedTST.Empty
+
+    val targetHash = Hash.fromBase64(targetHashString)
 
     def check(key: String) = {
       //println(s"Putting $key ...")
