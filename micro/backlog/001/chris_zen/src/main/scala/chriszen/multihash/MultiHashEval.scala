@@ -1,4 +1,4 @@
-package chriszen
+package chriszen.multihash
 
 import java.io.{InputStreamReader, BufferedReader, InputStream, FileInputStream}
 import scala.io.Source
