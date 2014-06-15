@@ -6,7 +6,7 @@ import java.io.PrintWriter
 import scala.io.Codec
 import java.io.File
 
-trait PasswordFinderSpec extends FlatSpec with Matchers with InOutOps with BeforeAndAfter {
+trait PasswordFinderSuite extends FlatSpec with Matchers with InOutOps with BeforeAndAfterAll {
 
   def subjectUnderTest: PasswordFinder
 
@@ -16,10 +16,10 @@ trait PasswordFinderSpec extends FlatSpec with Matchers with InOutOps with Befor
   val hugeDictionaryPath = "target/huge.dict"
 
   val reallyGoodPassword = "reallyGoodPassword:_74823423"
-
-  before {
+    
+  override def beforeAll() {
     writeLinesToTargetFile(smokePasswords, smokeDictionaryPath)
-    writeLinesToTargetFile((1 to 1000000).map(_.toString).toList, hugeDictionaryPath)
+    writeLinesToTargetFile((1 to 2000000).map(_.toString).toList, hugeDictionaryPath)
   }
 
   "A password finder" should "find a passwords when they exist in the dictionary" in {
@@ -42,7 +42,7 @@ trait PasswordFinderSpec extends FlatSpec with Matchers with InOutOps with Befor
 
   it should "have good performance" in {
     val pf = subjectUnderTest
-    val hashesToFind = List("1", "600", "999999", "notExisting").map(pf.computeHash)
+    val hashesToFind = List("1", "600", "999999", "notExisting", "1234", "56778").map(pf.computeHash)
     val matches = time("huge") {
       pf.findMatchesInDictionary(hugeDictionaryPath, hashesToFind)
     }
