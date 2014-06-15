@@ -19,7 +19,7 @@ trait PasswordFinderSuite extends FlatSpec with Matchers with InOutOps with Befo
     
   override def beforeAll() {
     writeLinesToTargetFile(smokePasswords, smokeDictionaryPath)
-    writeLinesToTargetFile((1 to 2000000).map(_.toString).toList, hugeDictionaryPath)
+    writeLinesToTargetFile((1 to 1000000).map(_.toString).toList, hugeDictionaryPath)
   }
 
   "A password finder" should "find a passwords when they exist in the dictionary" in {
@@ -46,7 +46,7 @@ trait PasswordFinderSuite extends FlatSpec with Matchers with InOutOps with Befo
     val matches = time("huge") {
       pf.findMatchesInDictionary(hugeDictionaryPath, hashesToFind)
     }
-    matches.map(_._2).flatten should be(Set("1", "600", "999999"))
+    matches.map(_._2).flatten should be(Set("56778", "1234", "1", "999999", "600"))
   }
 
   def time[T](title: String)(code: => T): T = {
