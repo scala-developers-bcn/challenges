@@ -6,9 +6,10 @@ import java.io.PrintWriter
 import scala.io.Codec
 import java.io.File
 
-trait PasswordFinderSpec extends FlatSpec with Matchers with InOutOps with BeforeAndAfter {
+trait PasswordFinderSuite extends FlatSpec with Matchers with InOutOps with BeforeAndAfterAll {
 
   def subjectUnderTest: PasswordFinder
+  def suiteName: String
 
   val smokePasswords = List("1234", "abcd", "kkkk")
   val smokeDictionaryPath = "target/smoke.dict"
@@ -16,8 +17,8 @@ trait PasswordFinderSpec extends FlatSpec with Matchers with InOutOps with Befor
   val hugeDictionaryPath = "target/huge.dict"
 
   val reallyGoodPassword = "reallyGoodPassword:_74823423"
-
-  before {
+    
+  override def beforeAll() {
     writeLinesToTargetFile(smokePasswords, smokeDictionaryPath)
     writeLinesToTargetFile((1 to 1000000).map(_.toString).toList, hugeDictionaryPath)
   }
@@ -42,18 +43,18 @@ trait PasswordFinderSpec extends FlatSpec with Matchers with InOutOps with Befor
 
   it should "have good performance" in {
     val pf = subjectUnderTest
-    val hashesToFind = List("1", "600", "999999", "notExisting").map(pf.computeHash)
+    val hashesToFind = List("1", "600", "999999", "notExisting", "1234", "56778").map(pf.computeHash)
     val matches = time("huge") {
       pf.findMatchesInDictionary(hugeDictionaryPath, hashesToFind)
     }
-    matches.map(_._2).flatten should be(Set("1", "600", "999999"))
+    matches.map(_._2).flatten should be(Set("56778", "1234", "1", "999999", "600"))
   }
 
   def time[T](title: String)(code: => T): T = {
     val start = System.currentTimeMillis
     val x = code
     val elapsed = ((System.currentTimeMillis - start) / 1000.0)
-    println("Huge: Done in %.3f secs" format elapsed)
+    println(s"[$suiteName] Huge: Done in %.3f secs" format elapsed)
     x
   }
 
