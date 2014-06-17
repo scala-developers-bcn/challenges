@@ -18,8 +18,6 @@ object actors {
   class FacadeActor(pf: ActorPasswordFinder, nHashers: Int = 1) extends Actor {
     val hashAccActor = context.actorOf(RoundRobinPool(nHashers).props(Props(classOf[HashAccumulatorActor], pf)), "hashers")
     val lineReaderActor = context.actorOf(Props(classOf[actors.LineReaderActor], hashAccActor), "reader")
-    context.watch(hashAccActor)
-    context.watch(lineReaderActor)
     var nAnswers = 0
     var allAnswers: List[OptionalPassword] = Nil
     var answerTo = self
@@ -29,7 +27,6 @@ object actors {
         answerTo = sender
         lineReaderActor ! Computation(p, h)
       }
-      case Terminated(ref) => println("terminated: " + ref)
       case PasswordAnswer(answers) => {
         nAnswers = nAnswers + 1
         allAnswers = answers ::: allAnswers
@@ -53,7 +50,6 @@ object actors {
   class LineReaderActor(hashAccActor: ActorRef) extends Actor with InOutOps {
     def receive = {
       case Computation(path, hashes) => {
-        println(s"reading $path")
         using(new BufferedReader(new InputStreamReader(new FileInputStream(path)))) {
           br =>
             {
@@ -78,29 +74,22 @@ class ActorPasswordFinder extends PasswordFinder {
 
   override def findMatchesInDictionary(dictionaryPath: String, hashes: List[String]): Set[(String, Option[String])] = {   
     val system = ActorSystem("PasswordFinderSystem") 
-    val facadeActor = system.actorOf(Props(classOf[actors.FacadeActor], this, 2))
+    val facadeActor = system.actorOf(Props(classOf[actors.FacadeActor], this, 4))
     val inbox = Inbox.create(system)
+    var res: Set[actors.OptionalPassword] = Set()
 
     inbox.send(facadeActor, actors.Computation(dictionaryPath, hashes))
-    inbox.receive(Duration(30, TimeUnit.SECONDS)) match {
+    inbox.receive(Duration(1, TimeUnit.MINUTES)) match {
       case actors.PasswordAnswer(answers) => {
-        println(answers)
-        println(answers.groupBy(a => a._1))
+        res = answers.groupBy(answer => answer._1).
+          map(group => group._2.fold((group._1, None))((l, r) => {
+            if(!l._2.isEmpty) l else r
+          })).toSet
       }
     }
     
-    
-    
     system.shutdown
-    
-    Set()
-  }
-}
-
-object Main {
-  def main(args: Array[String]) {
-    val pf = new ActorPasswordFinder
-    pf.findMatchesInDictionary("target/smoke.dict", List("1234", "abcd").map(pf.computeHash));
+    res
   }
 }
 

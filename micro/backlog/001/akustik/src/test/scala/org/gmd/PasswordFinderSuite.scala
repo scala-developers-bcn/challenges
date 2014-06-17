@@ -9,6 +9,7 @@ import java.io.File
 trait PasswordFinderSuite extends FlatSpec with Matchers with InOutOps with BeforeAndAfterAll {
 
   def subjectUnderTest: PasswordFinder
+  def suiteName: String
 
   val smokePasswords = List("1234", "abcd", "kkkk")
   val smokeDictionaryPath = "target/smoke.dict"
@@ -53,7 +54,7 @@ trait PasswordFinderSuite extends FlatSpec with Matchers with InOutOps with Befo
     val start = System.currentTimeMillis
     val x = code
     val elapsed = ((System.currentTimeMillis - start) / 1000.0)
-    println("Huge: Done in %.3f secs" format elapsed)
+    println(s"[$suiteName] Huge: Done in %.3f secs" format elapsed)
     x
   }
 
